@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import OnboardCustomer from "./component/OnboardCustomer";
+import AddUser from "./component/AddUser";
+import ListUsers from "./component/ListUsers";
 
 export const router = createBrowserRouter([
     {
@@ -12,11 +14,11 @@ export const router = createBrowserRouter([
     },
     {
         path: '/:customer_sid/users',
-        element: <>Users List</>
+        element: <ListUsers />
     },
     {
         path: '/:customer_sid/users/new',
-        element: <>Create user</>
+        element: <AddUser />
     },
     {
         path: '/:customer_sid/users/:user_sid',

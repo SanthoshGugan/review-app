@@ -1,6 +1,7 @@
-export const createCustomerRequest = (values) => {
+export const createUserRequest = ({ values, customer_sid }) => {
     return {
-        organization_name: values?.organizationName,
+        customer_sid,
+        name: values?.name,
         phone_number: values?.phoneNumber,
         email: values?.email,
         address: values?.address
