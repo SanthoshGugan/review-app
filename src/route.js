@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import OnboardCustomer from "./component/OnboardCustomer";
 
 export const router = createBrowserRouter([
     {
@@ -47,6 +48,6 @@ export const router = createBrowserRouter([
     },
     {
         path: '/onboard',
-        element: <>Customer onboarding</>
+        element: <OnboardCustomer />
     }
 ]);
