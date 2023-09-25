@@ -1,0 +1,29 @@
+name: Deploy React app to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install SSH key
+        run: |
+          echo "${{ secrets.EC2_PEM_KEY }}" > ec2-key.pem
+          chmod 400 ec2-key.pem
+
+      - name: ssh into ec2
+        run: |
+          ssh -i ec2-key.pem -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          sudo docker stop review-app || true 
+          sudo docker rm review-app || true
+          sudo rm -rf review-app
+          git clone git@github.com:SanthoshGugan/review-app.git
+          cd review-app
+          npm install
+          sudo docker build -t review-app . 
+          sudo docker run --name review-app -p 3000:3000 -d review-app
+          EOF
