@@ -21,7 +21,7 @@ jobs:
           sudo docker stop review-app || true 
           sudo docker rm review-app || true
           sudo rm -rf review-app
-          git clone git@github.com:SanthoshGugan/review-app.git
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_review_app" git clone git@github.com:SanthoshGugan/review-app.git
           cd review-app
           npm install
           sudo docker build -t review-app . 
