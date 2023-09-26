@@ -75,7 +75,7 @@ const AddUser = (props) => {
                     />
                     <ErrorMessage errors={errors} name="address" />
                 </Box>
-                <Button colorScheme="teal" type="submit" isLoading={isSubmitting} isDisabled={!isValid}> Sign up </Button>
+                <Button colorScheme="teal" type="submit" isLoading={isSubmitting} isDisabled={!isValid}> Add User </Button>
             </form>
         </Box>
     );
