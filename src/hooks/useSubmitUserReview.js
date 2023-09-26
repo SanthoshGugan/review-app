@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchReviewApi, updateReviewApi } from "../api/ReviewApi";
-import { getFieldFromReview, updateFieldInReview } from "../utils/ReviewUtils";
+import { formatRequestForReviewSubmit, getFieldFromReview, updateFieldInReview } from "../utils/ReviewUtils";
 
 const useSubmitUserReview = ({ review_sid }) => {
 
@@ -57,7 +57,7 @@ const useSubmitUserReview = ({ review_sid }) => {
     const submitReview = async () => {
         const { content } = review;
         const req = {
-            content
+            content: formatRequestForReviewSubmit(content)
         };
         await updateReviewApi({
             review_sid,

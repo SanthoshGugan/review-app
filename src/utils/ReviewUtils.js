@@ -14,3 +14,11 @@ export const updateFieldInReview = ({ review, index, field }) => {
         content: updatedContent
     };
 };
+
+
+export const formatRequestForReviewSubmit = (content) => content.map(field => {
+        const { field_type, ...remainingProps } = field;
+        return {
+            ...remainingProps
+        };
+    });
