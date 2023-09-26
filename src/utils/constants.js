@@ -1,0 +1,1 @@
+export const CUSTOMER_USERNAME_MAX_LENGTH = 10;
