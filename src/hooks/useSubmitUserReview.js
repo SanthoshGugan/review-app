@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchReviewApi, updateReviewApi } from "../api/ReviewApi";
-import { formatRequestForReviewSubmit, getFieldFromReview, updateFieldInReview } from "../utils/ReviewUtils";
+import { formatRequestForReviewSubmit, getFieldFromReview, updateAnswersInReview, updateFieldInReview } from "../utils/ReviewUtils";
+import { useForm } from "react-hook-form";
 
 const useSubmitUserReview = ({ review_sid }) => {
 
@@ -8,6 +9,16 @@ const useSubmitUserReview = ({ review_sid }) => {
     const [ fetchingReviewInProgress, setFetchingReviewInProgress ] = useState(false);
     const [ errorInReviewFetch, setErrorInReviewFetch ] = useState(false);
     const [ fields, setFields ] = useState([]);
+
+    const {
+        handleSubmit,
+        register,
+        formState: { isValid, isSubmitting },
+        setValue,
+        reset,
+        getValues,
+        watch
+    } = useForm();
 
     const constructFields = () => {
         const { content = [] } = review;
@@ -18,12 +29,18 @@ const useSubmitUserReview = ({ review_sid }) => {
                 return {
                     ...remaining,
                     props,
-                    field: name
+                    field_name: name
                 };
             });
         setFields(fields);
-
-        console.log("fields : " + fields);
+        const answers = content.map(field => {
+            const { answer } = field;
+            return answer;
+        });
+        console.log(`answers  : ${answers}`)
+        reset({
+            answers
+        })
     }
 
     const fetchReview = async () => {
@@ -40,24 +57,16 @@ const useSubmitUserReview = ({ review_sid }) => {
         }
     }
 
+    const updateAnswer = ({ answer, index }) => {
+        setValue(`answers.${index}`, answer);
+        const answers = getValues();
+        console.log(`answers : ${JSON.stringify(answers)}`)
+    };
 
-    const updateRating = ({ answer, index }) => {
-        const field = getFieldFromReview({review, index});
-        const updatedField = { ...field, answer };
-        const updatedReview = updateFieldInReview({
-            review,
-            index,
-            field: updatedField,
-        });
-        setReview({
-            ...updatedReview
-        })
-    }
-
-    const submitReview = async () => {
+    const submitReview = async (values) => {
         const { content } = review;
         const req = {
-            content: formatRequestForReviewSubmit(content)
+            content: updateAnswersInReview(values, content)
         };
         await updateReviewApi({
             review_sid,
@@ -71,13 +80,13 @@ const useSubmitUserReview = ({ review_sid }) => {
     }, [review?.content])
 
     return {
+        handleSubmit,
+        register,
         fetchReview,
-        updateRating,
+        updateAnswer,
         submitReview,
-        fetchingReviewInProgress,
-        errorInReviewFetch,
-        review,
-        fields
+        fields,
+        watch
     };
 };
 

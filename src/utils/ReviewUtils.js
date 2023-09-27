@@ -22,3 +22,12 @@ export const formatRequestForReviewSubmit = (content) => content.map(field => {
             ...remainingProps
         };
     });
+
+export const updateAnswersInReview = (values, content) => {
+    return content.map((field, index) => {
+        return {
+            ...field,
+            answer: values.answers[index]
+        }
+    })
+}
