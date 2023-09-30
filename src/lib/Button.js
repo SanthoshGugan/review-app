@@ -4,7 +4,7 @@ import React from "react";
 const RButton = (props) => {
     const {
         text = "Submit",
-        buttonProps
+        buttonProps,
     } = props;
     return (
         <Box>
@@ -15,6 +15,7 @@ const RButton = (props) => {
                 style={{
                     padding: '2rem 6rem'
                 }}
+                maxW="15vh"
             >
                 {text}
             </Button>

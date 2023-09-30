@@ -1,4 +1,4 @@
-import { Box, Button, Card, Center, Container, Flex, Input, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, Center, Container, Flex, Input, Link, VStack, useToast } from "@chakra-ui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -10,11 +10,20 @@ import RInput from "../lib/Input";
 import { getButtonFormProps, getInputFormProps } from "../utils/formUtil";
 import { emailRegex } from "../utils/regexUtil";
 import RButton from "../lib/Button";
+import { NavLink, useNavigate } from "react-router-dom";
+import { VERIFY_PASSCODE_URL } from "../utils/urlUtil";
+import CenterCard from "../lib/CenterCard";
 
 const OnboardCustomer = (props) => {
 
-    const [ showVerifyPasscode, setShowVerifyPasscode ] = useState(false);
     const [ customerSid, setCustomerSid ] = useState(null);
+    const [ signUpComplete, setSignUpComplete ] = useState(false);
+    const [ isSignupInProgress, setIsSignupInProgress ] = useState(false);
+
+    const navigate = useNavigate();
+
+
+    const toast = useToast();
 
     const {
         handleSubmit,
@@ -33,12 +42,35 @@ const OnboardCustomer = (props) => {
     };
     
     const onSubmit = async (values) => {
-        const customer = await onboardCustomerApi(createCustomerRequest(values));
-        const { customer_sid } = customer?.data;
-        if(customer_sid) {
-            setCustomerSid(customerSid);
+        try {
+            setIsSignupInProgress(true);
+            const customer = await onboardCustomerApi(createCustomerRequest(values));
+            const { customer_sid } = customer?.data;
+            if(customer_sid) {
+                setCustomerSid(customer_sid);
+            }
+
+            toast({
+                title: "Account Created",
+                description: "Please verify passcode sent over mail!",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+              })
+            setSignUpComplete(true);
+            setIsSignupInProgress(false);
+    
+        } catch (err) {
+            setIsSignupInProgress(false);
+
+            toast({
+                title: "Account creation failed",
+                description: "Please retry or reach out to us!",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+              })
         }
-        setShowVerifyPasscode(true)
     };
 
     const onOrgNameChange = (e) => {
@@ -49,95 +81,99 @@ const OnboardCustomer = (props) => {
     }
 
     return (
-        <Box height="100vh">
-            <Flex alignItems="center" justifyContent="center" height={"100%"}>
-                <Card
-                    style={{
-                        padding: "10vh 5vh",
-                        border: "1px solid #d6d6d6",
-                        borderRadius: "10px"
-                    }}
-                    maxW='md'
-                >
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <VStack spacing="1.5rem">
-                            <RInput
-                                formProps = {getInputFormProps({
-                                        id: "organizationName",
-                                        placeholder: "organization name",
-                                        isRequired: true,
-                                        minLength: 4,
-                                    })
-                                }
-                                {
-                                    ...form_props
-                                }
+        <CenterCard>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <VStack spacing="1.5rem">
+                    <RInput
+                        formProps = {getInputFormProps({
+                                id: "organizationName",
+                                placeholder: "organization name",
+                                isRequired: true,
+                                minLength: 4,
+                            })
+                        }
+                        {
+                            ...form_props
+                        }
 
-                                onChange={onOrgNameChange}
-                            />
+                        onChange={onOrgNameChange}
+                    />
 
-                            <RInput
-                                formProps = {getInputFormProps({
-                                        id: "email",
-                                        placeholder: "Email",
-                                        isRequired: true,
-                                        minLength: 4,
-                                        patternReg: emailRegex
-                                    })
-                                }
-                                {
-                                    ...form_props
-                                }
-                            />
-                            <RInput
-                                formProps = {getInputFormProps({
-                                        id: "phoneNumber",
-                                        placeholder: "phone number",
-                                        isRequired: true,
-                                        minLength: 4,
-                                        patternReg: /[0-9+]/
-                                    })
-                                }
-                                {
-                                    ...form_props
-                                }
-                            />
+                    <RInput
+                        formProps = {getInputFormProps({
+                                id: "email",
+                                placeholder: "Email",
+                                isRequired: true,
+                                minLength: 4,
+                                patternReg: emailRegex
+                            })
+                        }
+                        {
+                            ...form_props
+                        }
+                    />
+                    {/* <RInput
+                        formProps = {getInputFormProps({
+                                id: "phoneNumber",
+                                placeholder: "phone number",
+                                isRequired: true,
+                                minLength: 4,
+                                patternReg: /[0-9+]/
+                            })
+                        }
+                        {
+                            ...form_props
+                        }
+                    /> */}
 
-                            <RInput
-                                formProps = {getInputFormProps({
-                                        id: "address",
-                                        placeholder: "address",
-                                        isRequired: false,
-                                    })
-                                }
-                                {
-                                    ...form_props
-                                }
-                            />
+                    <RInput
+                        formProps = {getInputFormProps({
+                                id: "address",
+                                placeholder: "address",
+                                isRequired: false,
+                            })
+                        }
+                        {
+                            ...form_props
+                        }
+                    />
 
-                            <RInput
-                                formProps = {getInputFormProps({
-                                        id: "username",
-                                        placeholder: "username",
-                                        isRequired: true,
-                                        minLength: 4,
-                                        maxLength: CUSTOMER_USERNAME_MAX_LENGTH,
-                                        patternReg: /^[a-z0-9]+$/,
-                                    })
-                                }
-                                {
-                                    ...form_props
-                                }
-                            />
-                            <RButton
-                                text="Sign up"
-                                buttonProps={getButtonFormProps({})}
-                            />
-                        </VStack>
-                    </form>
-                </Card>
-            </Flex>
-        </Box>
+                    <RInput
+                        formProps = {getInputFormProps({
+                                id: "username",
+                                placeholder: "username",
+                                isRequired: true,
+                                minLength: 4,
+                                maxLength: CUSTOMER_USERNAME_MAX_LENGTH,
+                                patternReg: /^[a-z0-9]+$/,
+                            })
+                        }
+                        {
+                            ...form_props
+                        }
+                    />
+                    <RButton
+                        text="Sign up"
+                        buttonProps={getButtonFormProps({
+                            isDisabled: signUpComplete,
+                            isLoading: isSignupInProgress
+                        })}
+                    />
+                    <Box>
+                        {customerSid &&  (
+                        <NavLink
+                            to={VERIFY_PASSCODE_URL({ customer_sid: customerSid })} 
+                            style={{
+                                color: "blue",
+                                textDecoration: "underline"
+                            }}
+                        >
+                            proceed to verify email
+                        </NavLink>)}
+                    </Box>
+                </VStack>
+            </form>
+        </CenterCard>
     );
 };
 

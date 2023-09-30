@@ -3,7 +3,7 @@ import { ErrorMessage } from "@hookform/error-message";
 
 const RInput = (props) => {
 
-    const { register, errors, formProps, getFieldState } = props;
+    const { register, errors, formProps, getFieldState, type= "text" } = props;
     const { registerProps : { regId, validations }, id } = formProps;
     const { invalid } = getFieldState(id);
 
@@ -24,6 +24,7 @@ const RInput = (props) => {
                 {
                     ...props
                 }
+                type={type}
             />
             <Container height="30px">
                 <ErrorMessage errors={errors} name={id} style={{ fontSize: '14px'}} as={<Text />}/>
