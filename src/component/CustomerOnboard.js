@@ -1,11 +1,9 @@
-import { Box, Button, Card, Center, Container, Flex, Input, Link, VStack, useToast } from "@chakra-ui/react";
-import { ErrorMessage } from "@hookform/error-message";
+import { Box, VStack, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { onboardCustomerApi } from "../api/CustomerApi";
 import { createCustomerRequest, trimOrganizationName } from "../utils/CustomerUtils";
 import { CUSTOMER_USERNAME_MAX_LENGTH } from "../utils/constants";
-import VerifyPasscode from "./VerifyPasscode";
 import RInput from "../lib/Input";
 import { getButtonFormProps, getInputFormProps } from "../utils/formUtil";
 import { emailRegex } from "../utils/regexUtil";

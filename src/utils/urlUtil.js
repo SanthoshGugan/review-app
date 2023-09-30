@@ -4,5 +4,8 @@ export const VERIFY_PASSCODE_URL = ({ customer_sid }) =>
 export const CUSTOMER_LOGIN_URL = () => 
     `/login`;
 
-export const CUSTOMER_USERS_LIST = ({ customer_sid }) => 
-    `/${customer_sid}/users`
+export const CUSTOMER_USERS_LIST_URL = ({ customer_sid }) => 
+    `/${customer_sid}/users`;
+
+export const ADD_USER_URL = ({ customer_sid }) => 
+    `/${customer_sid}/users/new`;
