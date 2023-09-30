@@ -3,13 +3,12 @@ import { useForm } from "react-hook-form";
 import { updateCustomerApi, verifyPasscodeApi } from "../api/CustomerApi";
 import { updateCustomerPasswordRequest, verifyPasscodeRequest } from "../utils/CustomerUtils";
 import { NavLink, useParams } from "react-router-dom";
-import { Alert, AlertIcon, Box, Button, Input, Stack, VStack, useToast } from "@chakra-ui/react";
-import { ErrorMessage } from "@hookform/error-message";
+import { Box, VStack, useToast } from "@chakra-ui/react";
 import CenterCard from "../lib/CenterCard";
 import RInput from "../lib/Input";
 import { getButtonFormProps, getInputFormProps } from "../utils/formUtil";
 import RButton from "../lib/Button";
-import { CUSTOMER_LOGIN_URL, VERIFY_PASSCODE_URL } from "../utils/urlUtil";
+import { CUSTOMER_LOGIN_URL } from "../utils/urlUtil";
 
 const VerifyPasscode = (props) => {
 
@@ -25,7 +24,9 @@ const VerifyPasscode = (props) => {
         register,
         formState: { errors, isSubmitting, isValid },
         getFieldState
-    } = useForm();
+    } = useForm({
+        mode: "onTouched"
+    });
 
     const form_props = {
         errors,

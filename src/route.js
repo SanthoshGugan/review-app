@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import OnboardCustomer from "./component/OnboardCustomer";
+import CustomerOnboard from "./component/CustomerOnboard";
 import AddUser from "./component/AddUser";
 import ListUsers from "./component/ListUsers";
 import UserReview from "./component/UserReview";
 import VerifyPasscode from "./component/VerifyPasscode";
-import LoginCustomer from "./component/LoginCustomer";
+import CustomerLogin from "./component/CustomerLogin";
 
 export const router = createBrowserRouter([
     {
@@ -53,11 +53,11 @@ export const router = createBrowserRouter([
     },
     {
         path: '/login',
-        element: <LoginCustomer />
+        element: <CustomerLogin />
     },
     {
         path: '/onboard',
-        element: <OnboardCustomer />
+        element: <CustomerOnboard />
     },
     {
         path: '/:customer_sid/verify-passcode',

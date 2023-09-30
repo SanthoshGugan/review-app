@@ -14,7 +14,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { VERIFY_PASSCODE_URL } from "../utils/urlUtil";
 import CenterCard from "../lib/CenterCard";
 
-const OnboardCustomer = (props) => {
+const CustomerOnboard = (props) => {
 
     const [ customerSid, setCustomerSid ] = useState(null);
     const [ signUpComplete, setSignUpComplete ] = useState(false);
@@ -177,4 +177,4 @@ const OnboardCustomer = (props) => {
     );
 };
 
-export default OnboardCustomer;
+export default CustomerOnboard;
