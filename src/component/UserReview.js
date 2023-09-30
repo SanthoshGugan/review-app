@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import useSubmitUserReview from "../hooks/useSubmitUserReview";
 import StarRating from "./ReviewField/StarRating";
 import { Box, Button, Text } from "@chakra-ui/react";
+import ReviewField from "./ReviewField/ReviewField";
 
 const UserReview = (props) => {
 
@@ -14,28 +15,19 @@ const UserReview = (props) => {
 
     const {
         fetchReview,
-        updateRating,
+        updateAnswer,
         submitReview,
         fields,
-        fetchingReviewInProgress,
-        errorInReviewFetch
+        handleSubmit,
+        watch
     } = useSubmitUserReview({ review_sid });
 
     const renderFields = useCallback(() => {
-        return fields.map((field, index) => {
-            const {
-                max_value,
-                question,
-                answer
-            } = field;
-            return (
-                <StarRating
-                    maxStars={max_value}
-                    updateRating={val => updateRating({ answer: val, index })}
-                    question={question}
-                    initialRating={answer}
-                />);
-        });
+        return <ReviewField
+                    fields={fields}
+                    updateAnswer={updateAnswer}
+                    watch={watch}
+                />
     }, [fields])
 
     useEffect(() => {
@@ -45,8 +37,10 @@ const UserReview = (props) => {
     return (
         <>
             <Box>
-                {renderFields()}
-                <Button onClick={() => submitReview()}> Submit</Button>
+                <form onSubmit={handleSubmit(submitReview)}>
+                    {renderFields()}
+                    <Button type="submit"> Submit</Button>
+                </form>
             </Box>
         </>
     );
