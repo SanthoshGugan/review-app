@@ -66,12 +66,11 @@ const CustomerLogin = (props) => {
             }
 
         } catch (err) {
-            const { response: {data: {message: description}} } = err;
             setIsLoginSuccessful(false);
             setIsLoginComplete(true);
             toast({
                 title: "Error while logging in",
-                description,
+                description: "Please retry.If persists, contact us.",
                 status: "error",
                 duration: 5000,
                 isClosable: true,
@@ -115,7 +114,7 @@ const CustomerLogin = (props) => {
                 <RButton
                     text="Login"
                     buttonProps={getButtonFormProps({
-                        isDisabled: !isValid || isLoginSuccessful,
+                        isDisabled: !isValid,
                         isLoading: isSubmitting,
                     })}
                 />

@@ -5,14 +5,13 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 
 const StarRating = ({ 
     maxStars = 5,
-    initialRating,
+    rating,
     question,
-    updateRating = () => {} 
+    updateRating = () => {},
+    fieldIndex
 }) => {
-  const [rating, setRating] = useState(initialRating);
 
   const handleStarClick = (index) => {
-    setRating(index + 1);
     updateRating(index + 1);
   };
 
