@@ -1,8 +1,7 @@
-import { Alert, AlertIcon, Box, Button, Input, Stack, Text, VStack, useStatStyles, useToast } from "@chakra-ui/react";
+import {  VStack, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { CUSTOMER_USERNAME_MAX_LENGTH } from "../utils/constants";
-import { ErrorMessage } from "@hookform/error-message";
 import { loginCustomerApi } from "../api/CustomerApi";
 import { loginCustomerRequest } from "../utils/CustomerUtils";
 import CenterCard from "../lib/CenterCard";
@@ -10,7 +9,7 @@ import RInput from "../lib/Input";
 import { getButtonFormProps, getInputFormProps } from "../utils/formUtil";
 import RButton from "../lib/Button";
 import { useNavigate } from "react-router-dom";
-import { CUSTOMER_USERS_LIST } from "../utils/urlUtil";
+import { CUSTOMER_USERS_LIST_URL } from "../utils/urlUtil";
 
 const CustomerLogin = (props) => {
 
@@ -61,7 +60,7 @@ const CustomerLogin = (props) => {
                     isClosable: true,
                   })
                   setTimeout(() => {
-                    navigate(CUSTOMER_USERS_LIST({ customer_sid }))
+                    navigate(CUSTOMER_USERS_LIST_URL({ customer_sid }))
                   }, 3000)
             }
 

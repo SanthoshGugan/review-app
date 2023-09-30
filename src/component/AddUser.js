@@ -1,83 +1,134 @@
-import { Box, Button, Input } from "@chakra-ui/react";
-import { ErrorMessage } from "@hookform/error-message";
-import React from "react";
+import {  Center, useToast } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { createCustomerRequest } from "../utils/CustomerUtils";
 import { onboardUserApi } from "../api/UserApi";
 import { createUserRequest } from "../utils/UserUtils";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import CenterCard from "../lib/CenterCard";
+import RInput from "../lib/Input";
+import { getButtonFormProps, getInputFormProps } from "../utils/formUtil";
+import { emailRegex } from "../utils/regexUtil";
+import RButton from "../lib/Button";
+import { CUSTOMER_USERS_LIST_URL } from "../utils/urlUtil";
 
 const AddUser = (props) => {
 
     const { customer_sid } = useParams();
+    const toast = useToast();
+    const navigate = useNavigate();
+
+    const [ isAddUserComplete, setIsAddUserComplete ] = useState(false);
+    const [ isAddUserSuccess, setIsAddUserSuccess ] = useState(false);
 
     const {
         handleSubmit,
         register,
-        formState: { errors, isSubmitting, isValid}
-    } = useForm();
+        formState: { errors, isSubmitting, isValid},
+        getFieldState
+    } = useForm({
+        mode: "onTouched"
+    });
+
+    const form_props = {
+        register,
+        errors,
+        getFieldState
+    };
+
     const onSubmit = async (values) => {
-        const customer = await onboardUserApi(createUserRequest({ values, customer_sid }));
+        try {
+            setIsAddUserComplete(false);
+            const user = await onboardUserApi(createUserRequest({ values, customer_sid }));
+            setIsAddUserComplete(true);
+            setIsAddUserSuccess(true);
+            
+            toast({
+                title: "User Created",
+                description: "Navigating back to user list",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+              });
+
+              setTimeout(() => {
+                navigate(CUSTOMER_USERS_LIST_URL({ customer_sid }))
+              }, 3000)
+        } catch(err) {
+            setIsAddUserComplete(true);
+            setIsAddUserSuccess(false);
+            toast({
+                title: "Error in user creation",
+                description: "Please retry or reach out to us",
+                status: "error",
+                isClosable: true,
+              })
+        }
     };
 
     return (
-        <Box>
+        <CenterCard>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Box>
-                    <Input
-                        id="name"
-                        placeholder="name"
-                        {
-                            ...register("name", {
-                                required: "This is required",
-                                minLength: { value: 4, message: "Minimum length should be 4."}
-                            })
-                        }
+                <RInput
+                    formProps = {getInputFormProps({
+                            id: "name",
+                            placeholder: "user name",
+                            isRequired: true,
+                            minLength: 4,
+                        })
+                    }
+                    {
+                        ...form_props
+                    }
+                />
+
+                <RInput
+                    formProps = {getInputFormProps({
+                            id: "email",
+                            placeholder: "email",
+                            isRequired: true,
+                            minLength: 4,
+                            patternReg: emailRegex
+                        })
+                    }
+                    {
+                        ...form_props
+                    }
+                />
+
+                {/* <RInput
+                    formProps = {getInputFormProps({
+                            id: "phoneNumber",
+                            placeholder: "phone number",
+                            isRequired: true,
+                            minLength: 4,
+                        })
+                    }
+                    {
+                        ...form_props
+                    }
+                /> */}
+
+                <RInput
+                    formProps = {getInputFormProps({
+                            id: "address",
+                            placeholder: "address",
+                        })
+                    }
+                    {
+                        ...form_props
+                    }
+                />
+                <Center>
+                    <RButton
+                        text="Add User"
+                        buttonProps={getButtonFormProps({
+                            isDisabled: !isValid,
+                            isLoading: isSubmitting
+                        })}
                     />
-                    <ErrorMessage errors={errors} name="name" />
-                </Box>
-                <Box>
-                    <Input
-                        id="email"
-                        placeholder="Email"
-                        {
-                            ...register("email", {
-                                required: "This is required",
-                                minLength: { value: 4, message: "Minimum length should be 4."},
-                            })
-                        }
-                    />
-                    <ErrorMessage errors={errors} name="email" />
-                </Box>
-                <Box>
-                    <Input
-                        id="phoneNumber"
-                        placeholder="phone number"
-                        {
-                            ...register("phoneNumber", {
-                                required: "This is required",
-                                minLength: { value: 4, message: "Minimum length should be 4."}
-                            })
-                        }
-                    />
-                    <ErrorMessage errors={errors} name="phoneNumber" />
-                </Box>
-                <Box>
-                    <Input
-                        id="address"
-                        placeholder="address"
-                        {
-                            ...register("address", {
-                                required: "This is required",
-                                minLength: { value: 4, message: "Minimum length should be 4."}
-                            })
-                        }
-                    />
-                    <ErrorMessage errors={errors} name="address" />
-                </Box>
-                <Button colorScheme="teal" type="submit" isLoading={isSubmitting} isDisabled={!isValid}> Add User </Button>
+                </Center>
             </form>
-        </Box>
+        </CenterCard>
     );
 };
 
