@@ -4,7 +4,7 @@ export const createCustomerRequest = (values) => {
         // phone_number: values?.phoneNumber,
         email: values?.email,
         address: values?.address,
-        username: values?.username
+        password: values?.password
     }
 };
 
@@ -21,10 +21,10 @@ export const loginCustomerRequest = (values) => {
     }
 };
 
-export const verifyPasscodeRequest = ({ values, customer_sid }) => {
+export const verifyPasscodeRequest = ({ hash, customer_sid }) => {
     return {
         customer_sid,
-        passcode: values?.passcode
+        hash
     };
 };
 

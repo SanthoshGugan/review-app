@@ -10,6 +10,7 @@ import { getButtonFormProps, getInputFormProps } from "../utils/formUtil";
 import RButton from "../lib/Button";
 import { useNavigate } from "react-router-dom";
 import { CUSTOMER_USERS_LIST_URL } from "../utils/urlUtil";
+import { emailRegex } from "../utils/regexUtil";
 
 const CustomerLogin = (props) => {
 
@@ -54,7 +55,7 @@ const CustomerLogin = (props) => {
             } else {
                 toast({
                     title: "Successfully logged in",
-                    description: "Navigating ro users page",
+                    description: "Navigating to users page",
                     status: "success",
                     duration: 5000,
                     isClosable: true,
@@ -87,9 +88,7 @@ const CustomerLogin = (props) => {
                             id: "username",
                             placeholder: "username",
                             isRequired: true,
-                            minLength: 4,
-                            maxLength: CUSTOMER_USERNAME_MAX_LENGTH,
-                            patternReg: /^[a-z0-9]+$/
+                            patternReg: emailRegex
                         })
                     }
                     {

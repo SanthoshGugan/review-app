@@ -50,7 +50,7 @@ const CustomerOnboard = (props) => {
 
             toast({
                 title: "Account Created",
-                description: "Please verify passcode sent over mail!",
+                description: "Please click on the link sent over mail for verification!",
                 status: "success",
                 duration: 5000,
                 isClosable: true,
@@ -138,12 +138,9 @@ const CustomerOnboard = (props) => {
 
                     <RInput
                         formProps = {getInputFormProps({
-                                id: "username",
-                                placeholder: "username",
+                                id: "password",
+                                placeholder: "password",
                                 isRequired: true,
-                                minLength: 4,
-                                maxLength: CUSTOMER_USERNAME_MAX_LENGTH,
-                                patternReg: /^[a-z0-9]+$/,
                             })
                         }
                         {
@@ -157,18 +154,6 @@ const CustomerOnboard = (props) => {
                             isLoading: isSignupInProgress
                         })}
                     />
-                    <Box>
-                        {customerSid &&  (
-                        <NavLink
-                            to={VERIFY_PASSCODE_URL({ customer_sid: customerSid })} 
-                            style={{
-                                color: "blue",
-                                textDecoration: "underline"
-                            }}
-                        >
-                            proceed to verify email
-                        </NavLink>)}
-                    </Box>
                 </VStack>
             </form>
         </CenterCard>

@@ -3,7 +3,7 @@ import CustomerOnboard from "./component/CustomerOnboard";
 import AddUser from "./component/AddUser";
 import ListUsers from "./component/ListUsers";
 import UserReview from "./component/UserReview";
-import VerifyPasscode from "./component/VerifyPasscode";
+import VerifyEmail from "./component/VerifyEmail";
 import CustomerLogin from "./component/CustomerLogin";
 
 export const router = createBrowserRouter([
@@ -61,6 +61,6 @@ export const router = createBrowserRouter([
     },
     {
         path: '/:customer_sid/verify-passcode',
-        element: <VerifyPasscode />
+        element: <VerifyEmail />
     }
 ]);
