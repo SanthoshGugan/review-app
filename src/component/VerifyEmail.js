@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { updateCustomerApi, verifyPasscodeApi } from "../api/CustomerApi";
+import { updateCustomerApi, verifyPasscodeApi as verifyEmailApi } from "../api/CustomerApi";
 import { updateCustomerPasswordRequest, verifyPasscodeRequest } from "../utils/CustomerUtils";
-import { NavLink, useParams } from "react-router-dom";
-import { Box, VStack, useToast } from "@chakra-ui/react";
+import { NavLink, useParams, useSearchParams } from "react-router-dom";
+import { Alert, AlertIcon, Box, Flex, VStack, useToast } from "@chakra-ui/react";
 import CenterCard from "../lib/CenterCard";
 import RInput from "../lib/Input";
 import { getButtonFormProps, getInputFormProps } from "../utils/formUtil";
 import RButton from "../lib/Button";
 import { CUSTOMER_LOGIN_URL } from "../utils/urlUtil";
 
-const VerifyPasscode = (props) => {
+const VerifyEmail = (props) => {
 
     const { customer_sid } = useParams();
+    const [ searchParams ] = useSearchParams();
+    const hash = searchParams.get("token");
     const [ isVerificationSuccess, setIsVerificationSuccess ] = useState(false);
     const [ isVerificationComplete, setIsVerificationComplete ] = useState(false);
 
@@ -44,11 +46,11 @@ const VerifyPasscode = (props) => {
         getFieldState: passwordGetFieldState,
     } = useForm();
 
-    const onSubmit = async (values) => {
+    const verifyToken = async () => {
         try {
             setIsVerificationComplete(false);
-            const res = await verifyPasscodeApi(verifyPasscodeRequest({
-                values,
+            const res = await verifyEmailApi(verifyPasscodeRequest({
+                hash,
                 customer_sid
             }));
     
@@ -58,15 +60,15 @@ const VerifyPasscode = (props) => {
 
             if (!is_verified) {
                 toast({
-                    title: "Wrong Passcode!",
-                    description: "Please verify with passcode (case-sensitive) sent over mail!",
-                    status: "info",
+                    title: "Error in email verification!",
+                    description: "Please retry signup or contact us!",
+                    status: "error",
                     duration: 5000,
                     isClosable: true,
                   })
             } else {
                 toast({
-                    title: "Passcode verification complete",
+                    title: "Email verification complete",
                     description: "Please proceed with password update.",
                     status: "success",
                     duration: 5000,
@@ -78,7 +80,7 @@ const VerifyPasscode = (props) => {
             setIsVerificationComplete(true);
             setIsVerificationSuccess(false);
             toast({
-                title: "Error while verifying passcode",
+                title: "Error while verifying email",
                 description: "Please retry or try signup again. If persists contact us.",
                 status: "error",
                 duration: 5000,
@@ -87,36 +89,40 @@ const VerifyPasscode = (props) => {
         }
     };
 
-    const onSubmitPassword = async (values) => {
-        try {
-            setIsPasswordUpdateComplete(false);
-            const res = await updateCustomerApi({ customer_sid, req: { customer_account: updateCustomerPasswordRequest(values) } });
-            const customerDetail = res?.data;
-            setIsPasswordUpdateComplete(true);
-            setIsPasswordSuccessUpdated(true);
-            toast({
-                title: "Password updated",
-                description: "Please proceed with login!",
-                status: "success",
-                duration: 5000,
-                isClosable: true,
-              })
-        } catch(err) {
-            setIsPasswordSuccessUpdated(false);
-            setIsPasswordUpdateComplete(true);
-            toast({
-                title: "Error while updating password",
-                description: "Please retry or reach out to us.",
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-            });
-        }
-    };
+    // const onSubmitPassword = async (values) => {
+    //     try {
+    //         setIsPasswordUpdateComplete(false);
+    //         const res = await updateCustomerApi({ customer_sid, req: { customer_account: updateCustomerPasswordRequest(values) } });
+    //         const customerDetail = res?.data;
+    //         setIsPasswordUpdateComplete(true);
+    //         setIsPasswordSuccessUpdated(true);
+    //         toast({
+    //             title: "Password updated",
+    //             description: "Please proceed with login!",
+    //             status: "success",
+    //             duration: 5000,
+    //             isClosable: true,
+    //           })
+    //     } catch(err) {
+    //         setIsPasswordSuccessUpdated(false);
+    //         setIsPasswordUpdateComplete(true);
+    //         toast({
+    //             title: "Error while updating password",
+    //             description: "Please retry or reach out to us.",
+    //             status: "error",
+    //             duration: 5000,
+    //             isClosable: true,
+    //         });
+    //     }
+    // };
+
+    useEffect(() => {
+        verifyToken();
+    }, [hash]);
 
     return (
         <CenterCard>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            {/* <form>
                 <VStack>
                     <RInput
                         formProps = {getInputFormProps({
@@ -138,8 +144,8 @@ const VerifyPasscode = (props) => {
                         })}
                     />
                 </VStack>
-            </form>
-            {isVerificationComplete && isVerificationSuccess && (
+            </form> */}
+            {/* {isVerificationComplete && isVerificationSuccess && (
                 <Box marginTop="10vh">
                     <form onSubmit={handlePasswordSubmit(onSubmitPassword)}>
                         <VStack>
@@ -179,9 +185,27 @@ const VerifyPasscode = (props) => {
                         </VStack>
                     </form>
                 </Box>
-            )}
+            )} */}
+            {isVerificationComplete && isVerificationSuccess &&  (
+                <Alert status='success'>
+                    <AlertIcon />
+                    <Flex direction="column" justifyContent="center" alignItems="center">
+                    Thanks for verifying your email.{" "}
+                    <NavLink
+                        to={CUSTOMER_LOGIN_URL()} 
+                        style={{
+                            color: "blue",
+                            textDecoration: "underline"
+                        }}
+                    >
+                        Please proceed to login
+                    </NavLink>
+                    </Flex>
+                </Alert>
+                
+                                )}
         </CenterCard>
     );
 };
 
-export default VerifyPasscode;
+export default VerifyEmail;

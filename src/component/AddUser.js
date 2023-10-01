@@ -122,7 +122,7 @@ const AddUser = (props) => {
                     <RButton
                         text="Add User"
                         buttonProps={getButtonFormProps({
-                            isDisabled: !isValid,
+                            isDisabled: !isValid || (isAddUserComplete && isAddUserSuccess),
                             isLoading: isSubmitting
                         })}
                     />

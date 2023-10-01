@@ -7,7 +7,7 @@ export const onboardCustomerApi = async (customer) => {
 };
 
 export const verifyPasscodeApi = async (req) => {
-    return await axios.post(`${BASE_URL}/verify-passcode`, { ...req });
+    return await axios.post(`${BASE_URL}/verify-email`, { ...req });
 };
 
 export const updateCustomerApi = async ({customer_sid, req}) => {
