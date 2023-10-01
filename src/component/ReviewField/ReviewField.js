@@ -1,7 +1,7 @@
 import React from "react";
 import { FIELD_TYPES } from "../../utils/FieldTypes";
 import FeedbackText from "./FeedbackText";
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import StarRating from "./StarRating";
 
 
@@ -15,25 +15,42 @@ const ReviewField = (props) => {
             max_value,
             question,
             answer,
-            props
+            props,
+            field_type_sid
         } = field;
 
         return (
             <StarRating
                 maxStars={max_value}
-                updateRating={val => updateAnswer({ answer: val, index })}
+                updateRating={val => updateAnswer({ answer: val, field_type_sid, prop: "answer" })}
                 question={question}
-                rating={watch(`answers.${index}`)}
+                rating={watch(`${field_type_sid}.answer`)}
             />
         );
     };
 
+    const renderQuestion = () => {
+        const { question = "" } = fields[0] || {};
+        return (
+            <Box>
+                <Text 
+                    style={{
+                        fontSize: "24px",
+                        fontWeight: "bold"
+                    }}
+                >{question}</Text>
+            </Box>
+        );
+    }
+
     const renderText = ({ field, index }) => {
-        const { question } = field;
+        const { question, field_type_sid } = field;
         return (
             <FeedbackText
-                updateAnswer={val => updateAnswer({ answer: val, index })}
-                answer={watch(`answers.${index}`)}
+                updateAnswer={val => updateAnswer({ answer: val, field_type_sid, prop: "answer" })}
+                updateTitle={val => updateAnswer({ answer: val, field_type_sid, prop: "title"})}
+                answer={watch(`${field_type_sid}.answer`)}
+                title={watch(`${field_type_sid}.title`)}
                 question={question}
             />
         );
@@ -57,6 +74,7 @@ const ReviewField = (props) => {
 
     return (
         <Box>
+            {renderQuestion()}
             {renderFields()}
         </Box>
     );
