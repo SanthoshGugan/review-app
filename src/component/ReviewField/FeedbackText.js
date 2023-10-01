@@ -1,11 +1,13 @@
-import { Box, Text, Textarea } from "@chakra-ui/react";
+import { Box, Input, Text, Textarea, VStack } from "@chakra-ui/react";
 import React from "react";
 
 const FeedbackText = (props) => {
     const { 
         question,
         answer,
-        updateAnswer
+        title,
+        updateAnswer,
+        updateTitle
      } = props;
 
 
@@ -14,14 +16,21 @@ const FeedbackText = (props) => {
         updateAnswer(val);
      }
 
+     const onTitle = (e) => {
+        const val = e?.target?.value || '';
+        updateTitle(val);
+     }
 
 
     return (
-        <Box>
-            <Text>
+        <Box marginTop="2rem">
+            {/* <Text>
                 {question}
-            </Text>
-            <Textarea value={answer} onChange={onFeedback}/>
+            </Text> */}
+            <VStack spacing={10}>
+                <Input value={title} onChange={onTitle} variant="flushed" placeholder="title" fontWeight="bold" />
+                <Textarea value={answer} onChange={onFeedback} size="lg" variant="outline" rows={8}/>
+            </VStack>
         </Box>
     );
 };

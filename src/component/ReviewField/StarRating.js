@@ -1,5 +1,5 @@
 import { Icon, StarIcon } from '@chakra-ui/icons';
-import { Text } from '@chakra-ui/react';
+import { Center, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { FaStar, FaRegStar } from "react-icons/fa";
 
@@ -19,8 +19,8 @@ const StarRating = ({
     const stars = [];
     for (let i = 0; i < maxStars; i++) {
       stars.push(
-       rating >= i + 1 ? <Icon as={FaStar} onClick={() => handleStarClick(i)} boxSize={6}/> : 
-        <Icon as={FaRegStar} onClick={() => handleStarClick(i)} boxSize={6}/>
+       rating >= i + 1 ? <Icon as={FaStar} onClick={() => handleStarClick(i)} boxSize={10} color="gold"/> : 
+        <Icon as={FaRegStar} onClick={() => handleStarClick(i)} boxSize={10} color="gold"/>
       );
     }
 
@@ -29,10 +29,9 @@ const StarRating = ({
   
 
   return (
-    <div className="star-rating">
-        <Text>{question}</Text>
+    <Center className="star-rating" marginTop="1rem">
       {renderStars()}
-    </div>
+    </Center>
   );
 };
 

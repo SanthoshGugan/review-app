@@ -2,8 +2,9 @@ import React, { useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useSubmitUserReview from "../hooks/useSubmitUserReview";
 import StarRating from "./ReviewField/StarRating";
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Card, Center, Flex, Text } from "@chakra-ui/react";
 import ReviewField from "./ReviewField/ReviewField";
+import CenterCard from "../lib/CenterCard";
 
 const UserReview = (props) => {
 
@@ -19,7 +20,10 @@ const UserReview = (props) => {
         submitReview,
         fields,
         handleSubmit,
-        watch
+        watch,
+        isSubmitting,
+        isReviewSubmitted,
+        isReviewSubmissionDisabled
     } = useSubmitUserReview({ review_sid });
 
     const renderFields = useCallback(() => {
@@ -35,14 +39,35 @@ const UserReview = (props) => {
     }, [review_sid]);
 
     return (
-        <>
-            <Box>
+        <Box height="100vh">
+        <Flex alignItems="center" justifyContent="center" height={"100%"}>
+            <Card 
+                style={{
+                    padding: "5vh 5vw"
+                }}
+                width="75%"
+            >
                 <form onSubmit={handleSubmit(submitReview)}>
-                    {renderFields()}
-                    <Button type="submit"> Submit</Button>
+
+                    <Center flexDirection="column" gap="2rem">
+                        {renderFields()}
+                        <Button 
+                            type="submit" 
+                            style={{
+                                padding: '2rem 6rem',
+                            }}
+                            colorScheme="teal"
+                            size="lg"
+                            isLoading={isSubmitting}
+                            isDisabled={isReviewSubmitted || isReviewSubmissionDisabled}
+                        > 
+                            Submit
+                        </Button>
+                    </Center>
                 </form>
-            </Box>
-        </>
+            </Card>
+        </Flex>
+        </Box>
     );
 };
 
