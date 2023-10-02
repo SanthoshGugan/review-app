@@ -66,7 +66,7 @@ const AddUser = (props) => {
     };
 
     return (
-        <CenterCard>
+        <CenterCard title="Add User">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <RInput
                     formProps = {getInputFormProps({
@@ -120,7 +120,7 @@ const AddUser = (props) => {
                 />
                 <Center>
                     <RButton
-                        text="Add User"
+                        text="Add"
                         buttonProps={getButtonFormProps({
                             isDisabled: !isValid || (isAddUserComplete && isAddUserSuccess),
                             isLoading: isSubmitting

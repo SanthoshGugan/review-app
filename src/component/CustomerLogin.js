@@ -79,14 +79,14 @@ const CustomerLogin = (props) => {
     };
 
     return (
-        <CenterCard>
+        <CenterCard scheme="blue" title="Login to Account">
             <form onSubmit={handleSubmit(onSubmit)}>
             <VStack>
         
                 <RInput
                     formProps = {getInputFormProps({
                             id: "username",
-                            placeholder: "username",
+                            placeholder: "email",
                             isRequired: true,
                             patternReg: emailRegex
                         })

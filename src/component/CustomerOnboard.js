@@ -79,7 +79,7 @@ const CustomerOnboard = (props) => {
     }
 
     return (
-        <CenterCard>
+        <CenterCard scheme="blue" title="Create new Account">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <VStack spacing="1.5rem">
                     <RInput
