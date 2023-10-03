@@ -1,4 +1,4 @@
-import { Box, Card, CardBody, CardHeader, Flex, Heading } from "@chakra-ui/react";
+import { Box, Card, CardBody, CardHeader, Flex, Heading, Image } from "@chakra-ui/react";
 import React from "react";
 
 const CenterCard = (props) => {
