@@ -53,6 +53,17 @@ const ListUsers = (props) => {
         errorInReviewTrigger
     } = useRequestUserReview({ customer_sid });
 
+    const renderAddress = (row) => {
+        const { address = {} } = row;
+        const { city = "", country = ""} = address;
+        return (
+            <Box display="flex">
+                {city && city}
+                {country && (", " + country)}
+            </Box>
+        );
+    };
+
 
     const renderReviewTrigger = (row) => {
         const { sid: user_sid, email } = row;
@@ -87,7 +98,7 @@ const ListUsers = (props) => {
         },
         {
             name: "Address",
-            selector: row => row.address,
+            selector: row => renderAddress(row),
         },
         {
             name: "Actions",

@@ -110,8 +110,19 @@ const AddUser = (props) => {
 
                 <RInput
                     formProps = {getInputFormProps({
-                            id: "address",
-                            placeholder: "address",
+                            id: "city",
+                            placeholder: "city",
+                        })
+                    }
+                    {
+                        ...form_props
+                    }
+                />
+
+                <RInput
+                    formProps = {getInputFormProps({
+                            id: "country",
+                            placeholder: "country",
                         })
                     }
                     {

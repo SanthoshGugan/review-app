@@ -3,7 +3,7 @@ export const createCustomerRequest = (values) => {
         organization_name: values?.organizationName,
         // phone_number: values?.phoneNumber,
         email: values?.email,
-        address: values?.address,
+        // address: values?.address,
         password: values?.password
     }
 };

@@ -124,7 +124,7 @@ const CustomerOnboard = (props) => {
                         }
                     /> */}
 
-                    <RInput
+                    {/* <RInput
                         formProps = {getInputFormProps({
                                 id: "address",
                                 placeholder: "address",
@@ -134,7 +134,7 @@ const CustomerOnboard = (props) => {
                         {
                             ...form_props
                         }
-                    />
+                    /> */}
 
                     <RInput
                         formProps = {getInputFormProps({
