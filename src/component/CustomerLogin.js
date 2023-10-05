@@ -17,6 +17,7 @@ const CustomerLogin = (props) => {
     const [ isLoginSuccessful, setIsLoginSuccessful ] = useState(false);
     const [ isLoginComplete, setIsLoginComplete ] = useState(false);
     const [ failureReason, setFailureReason ] = useState(false);
+    const [ isNavigating, setIsNavigating ] = useState(false);
     const toast = useToast();
 
     const {
@@ -43,6 +44,7 @@ const CustomerLogin = (props) => {
             const { is_verified = false, message, customer_sid } = data;
             setIsLoginSuccessful(is_verified);
             setIsLoginComplete(true);
+            
             if (!is_verified) {
                 setFailureReason(message);
                 toast({
@@ -60,9 +62,11 @@ const CustomerLogin = (props) => {
                     duration: 5000,
                     isClosable: true,
                   })
+                  setIsNavigating(true);
                   setTimeout(() => {
+                    setIsNavigating(false);
                     navigate(CUSTOMER_USERS_LIST_URL({ customer_sid }))
-                  }, 3000)
+                  }, 2000)
             }
 
         } catch (err) {
@@ -113,7 +117,7 @@ const CustomerLogin = (props) => {
                     text="Login"
                     buttonProps={getButtonFormProps({
                         isDisabled: !isValid,
-                        isLoading: isSubmitting,
+                        isLoading: isSubmitting || isNavigating,
                     })}
                 />
             </VStack>
