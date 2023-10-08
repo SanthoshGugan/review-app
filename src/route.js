@@ -5,6 +5,7 @@ import ListUsers from "./component/ListUsers";
 import UserReview from "./component/UserReview";
 import VerifyEmail from "./component/VerifyEmail";
 import CustomerLogin from "./component/CustomerLogin";
+import ListReviews from "./component/ListReviews";
 
 export const router = createBrowserRouter([
     {
@@ -29,7 +30,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/:customer_sid/reviews',
-        element: <>Customer reviews</>
+        element: <ListReviews />
     },
     {
         path: '/:customer_sid/reviews/:user_sid/new',

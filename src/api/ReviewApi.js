@@ -13,3 +13,7 @@ export const fetchReviewApi = async ({ review_sid }) => {
 export const updateReviewApi = async ({ review_sid, req }) => {
     return await axios.put(`${BASE_URL}/${review_sid}`, {...req});
 }
+
+export const fetchReviewsApi = async ({ customer_sid }) => {
+    return await axios.get(`${BASE_URL}?customer_sid=${customer_sid}`);
+}

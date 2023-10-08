@@ -6,6 +6,14 @@ export const getFieldFromReview = ({ review, index }) => {
     return field;
 };
 
+export const getFieldFromReviewByFieldId = ({ review, select_field_type_sid }) => {
+    const { content = [] } = review;
+    return content.filter(field_item => {
+        const { field_type_sid } = field_item;
+        return select_field_type_sid === field_type_sid;
+    }) || [];
+}
+
 export const updateFieldInReview = ({ review, index, field }) => {
     const updatedContent = review.content.map((f, i) => {
         if (index === i) return field;
