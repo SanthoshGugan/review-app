@@ -8,7 +8,8 @@ const StarRating = ({
     rating,
     question,
     updateRating = () => {},
-    fieldIndex
+    fieldIndex,
+    starSize = 10
 }) => {
 
   const handleStarClick = (index) => {
@@ -19,8 +20,8 @@ const StarRating = ({
     const stars = [];
     for (let i = 0; i < maxStars; i++) {
       stars.push(
-       rating >= i + 1 ? <Icon as={FaStar} onClick={() => handleStarClick(i)} boxSize={10} color="gold"/> : 
-        <Icon as={FaRegStar} onClick={() => handleStarClick(i)} boxSize={10} color="gold"/>
+       rating >= i + 1 ? <Icon as={FaStar} onClick={() => handleStarClick(i)} boxSize={starSize} color="gold"/> : 
+        <Icon as={FaRegStar} onClick={() => handleStarClick(i)} boxSize={starSize} color="gold"/>
       );
     }
 

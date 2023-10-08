@@ -7,5 +7,5 @@ export const onboardUserApi = async (user) => {
 }
 
 export const fetchUsersApi = async ({ customer_sid }) => {
-    return await axios.get(`${BASE_URL}/${customer_sid}`);
+    return await axios.get(`${BASE_URL}/customer/${customer_sid}`);
 }
