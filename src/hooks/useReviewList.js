@@ -73,7 +73,17 @@ const useReviewList = ({ customer_sid }) => {
             const { sid } = tag;
             return !existingTagSet.has(sid);
         }) || [];
-    }
+    };
+
+    const formatTagstoSelect = (tags) => {
+        return tags.map(tag => {
+            const { sid, name } = tag;
+            return {
+                label: name,
+                value: sid
+            }
+        });
+    };
 
 
 
@@ -90,7 +100,9 @@ const useReviewList = ({ customer_sid }) => {
         getAvailableTagsToAdd,
 
         addTag,
-        removeTag
+        removeTag,
+
+        formatTagstoSelect
     }
 };
 

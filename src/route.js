@@ -6,6 +6,8 @@ import UserReview from "./component/UserReview";
 import VerifyEmail from "./component/VerifyEmail";
 import CustomerLogin from "./component/CustomerLogin";
 import ListReviews from "./component/ListReviews";
+import ListWidgets from "./component/ListWidgets";
+import AddWidgets from "./component/AddWidgets";
 
 export const router = createBrowserRouter([
     {
@@ -31,6 +33,14 @@ export const router = createBrowserRouter([
     {
         path: '/:customer_sid/reviews',
         element: <ListReviews />
+    },
+    {
+        path: '/:customer_sid/widgets',
+        element: <ListWidgets/>
+    },
+    {
+        path: '/:customer_sid/widgets/new',
+        element: <AddWidgets/>
     },
     {
         path: '/:customer_sid/reviews/:user_sid/new',
