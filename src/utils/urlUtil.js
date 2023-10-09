@@ -9,3 +9,6 @@ export const CUSTOMER_USERS_LIST_URL = ({ customer_sid }) =>
 
 export const ADD_USER_URL = ({ customer_sid }) => 
     `/${customer_sid}/users/new`;
+
+export const ADD_WIDGET_URL = ({ customer_sid }) => 
+    `/${customer_sid}/widgets/new`;
