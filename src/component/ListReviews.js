@@ -5,6 +5,8 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import DataTable from "react-data-table-component";
 import { getFieldFromReviewByFieldId } from "../utils/ReviewUtils";
 import StarRating from "./ReviewField/StarRating";
+import Tags from "./Tags";
+import AddTag from "./AddTag";
 
 
 const customStyles = {
@@ -44,7 +46,12 @@ const ListReviews = () => {
         fetchReviewList,
         fetchInProgress,
         errorInFetch,
-        reviews
+        reviews,
+        fetchTagsList,
+        allTags,
+        getAvailableTagsToAdd,
+        addTag,
+        removeTag
     } = useReviewList({ customer_sid });
 
     const renderAddress = (address) => {
@@ -89,6 +96,18 @@ const ListReviews = () => {
         return <Text>{answer}</Text>
     }
 
+    const renderTags = (row) => {
+        const { tags = [], sid } = row;
+        return (
+            <Flex width="100%">
+                <Box>
+                    <Tags tags={tags} removeTag={(tag_sid) => removeTag({review_sid: sid, tag_sid})}/>
+                </Box>
+                <AddTag availableTags={getAvailableTagsToAdd({existingTags: tags})} addTag={tag_sid => addTag({ tag_sid, review_sid: sid})}/>
+            </Flex>
+        );
+    }
+
     const columns = [
         {
             name: "User Name",
@@ -101,6 +120,10 @@ const ListReviews = () => {
         {
             name: "Content",
             selector: row => renderContent(row)
+        },
+        {
+            name: "Tags",
+            selector: row => renderTags(row)
         }
     ];
 
@@ -123,6 +146,7 @@ const ListReviews = () => {
 
     useEffect(() => {
         fetchReviewList();
+        fetchTagsList();
     }, [customer_sid])
 
 
