@@ -34,7 +34,7 @@ const customStyles = {
             fontSize: '16px'
         }
     }
-}
+};
 
 const ListUsers = (props) => {
 
