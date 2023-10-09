@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { addCustomerWidgetApi, fetchCustomerWidgetsApi, fetchWidgetsApi, updateCustomerWidgetApi } from "../api/WidgetApi";
 
 const useWidgetList = ({ customer_sid }) => {
@@ -11,13 +11,13 @@ const useWidgetList = ({ customer_sid }) => {
     const [ customerWidgets, setCustomerWidgets ] = useState([]);
     const [ fetchCustomerInProgress, setFetchCustomerInProgress ] = useState(false);
     const [ errorCustomerInFetch, setErrorCustomerInFetch ] = useState(false);
-
+    const [ availableWidgets, setAvailableWidgets ] = useState([]);
 
     const fetchWidgets = async () => {
         try {
             setFetchInProgress(true);
             const res = await fetchWidgetsApi();
-            const { data: { widgets }} = res;
+            const { data: { widgets = [] }} = res;
             setWidgets(widgets);
             setFetchInProgress(false);
             setErrorInFetch(false);
@@ -32,7 +32,7 @@ const useWidgetList = ({ customer_sid }) => {
         try {
             setFetchCustomerInProgress(true);
             const res = await fetchCustomerWidgetsApi({ customer_sid });
-            const { data: { customer_widgets }} = res;
+            const { data: { customer_widgets = [] }} = res;
             setCustomerWidgets(customer_widgets);
             setFetchCustomerInProgress(false);
             setErrorCustomerInFetch(false);
@@ -43,7 +43,7 @@ const useWidgetList = ({ customer_sid }) => {
     };
 
     const addCustomerWidget = async ({ widget_sid, props }) => {
-        await addCustomerWidgetApi({ req: { widget_sid, props } });
+        await addCustomerWidgetApi({ req: { widget_sid, props, customer_sid } });
         fetchCustomerWidgets();
     };
 
@@ -51,6 +51,21 @@ const useWidgetList = ({ customer_sid }) => {
         await updateCustomerWidgetApi({ customer_widget_sid, req: { props }});
         fetchCustomerWidgets();
     }
+
+    const getAvailableWidgets = () => {
+        
+        const usedWidgetSids = customerWidgets.map(customerWidget => customerWidget?.widget?.sid) || [];
+        // console.log(`usedWidgetSids : ${JSON.parse(usedWidgetSids)}`)
+        const remainingWidgets = widgets.filter(widget => {
+            return !usedWidgetSids.includes(widget.sid);
+        }) || [];
+        setAvailableWidgets(remainingWidgets);
+    }
+
+
+    useEffect(() => {
+        getAvailableWidgets();
+    }, [widgets?.length, customerWidgets?.length]);
 
     return {
         fetchWidgets,
@@ -66,6 +81,8 @@ const useWidgetList = ({ customer_sid }) => {
         addCustomerWidget,
 
         updateCustomerWidget,
+
+        availableWidgets
     };
 };
 

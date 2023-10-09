@@ -11,7 +11,7 @@ export const fetchCustomerWidgetsApi = async ({ customer_sid }) => {
 }
 
 export const addCustomerWidgetApi = async ({ req }) => {
-    return await axios.post(`${BASE_URL}/`, { ...req });
+    return await axios.post(`${BASE_URL}/customer`, { ...req });
 }
 
 export const updateCustomerWidgetApi = async ({ customer_widget_sid, req }) => {
