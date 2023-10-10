@@ -12,3 +12,6 @@ export const ADD_USER_URL = ({ customer_sid }) =>
 
 export const ADD_WIDGET_URL = ({ customer_sid }) => 
     `/${customer_sid}/widgets/new`;
+
+export const WIDGETS_URL = ({ customer_sid }) => 
+    `/${customer_sid}/widgets`;

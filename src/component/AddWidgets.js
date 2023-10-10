@@ -4,12 +4,26 @@ import { useParams } from "react-router-dom";
 import useReviewList from "../hooks/useReviewList";
 import useWidgetList from "../hooks/useWidgetList";
 import { MultiSelect} from "chakra-multiselect";
+import BreadcrumbNav from "./BreadcrumbNav";
+import { ADD_WIDGET_URL, WIDGETS_URL } from "../utils/urlUtil";
 
 const AddWidgets = ({}) => {
 
     const { 
         customer_sid
     } = useParams();
+
+
+    const NAVS = [
+        {
+            url: WIDGETS_URL({ customer_sid }),
+            label: "Widgets"
+        },
+        {
+            url: '#',
+            label: "New"
+        }
+    ]
 
     const {
         fetchWidgets,
@@ -61,6 +75,9 @@ const AddWidgets = ({}) => {
 
     return (
         <Box height="100vh" title="Add Widget">
+            <Flex alignItems="center" justifyContent="flex-start" margin="1rem 4rem">
+                <BreadcrumbNav navs={NAVS}/>
+            </Flex>
             <Flex alignItems="center" justifyContent="center" height="75%" width="75%" margin="10rem auto" border="1px solid " flexDirection="column">
             <Select placeholder="Select Widget" onChange={onWidgetTemplateSelect}>
                 {availableWidgets.map(widget => <option value={widget?.sid}>{widget?.name}</option>)}
