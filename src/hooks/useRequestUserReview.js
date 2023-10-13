@@ -29,8 +29,17 @@ const useRequestUserReview = ({ customer_sid }) => {
             setErrorInReviewTrigger(false);
             
         } catch(err) {
+            const { message } = err?.response?.data || "Error while sending review invitation!";
             setReviewTriggerInProgress(false);
             setErrorInReviewTrigger(true);
+            toast({
+                title: "Review request failed!",
+                description: message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+
         }
     };
 
