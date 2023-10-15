@@ -13,6 +13,7 @@ const customStyles = {
     table: {
         style: {
             borderRadius: '10px',
+            maxWidth: "100vw"
         }
     },
     headCells: {
@@ -93,7 +94,7 @@ const ListReviews = () => {
 
         const field = getFieldFromReviewByFieldId({review: row, select_field_type_sid: 'FT00002'});
         const { answer } = field[0] || {};
-        return <Text>{answer}</Text>
+        return <Text maxWidth="40%" overflowWrap="anywhere" display="flex" flexWrap="wrap"><Box width="100%" height="100%" overflow="visible">{answer}</Box></Text>
     }
 
     const renderTags = (row) => {
@@ -112,18 +113,34 @@ const ListReviews = () => {
         {
             name: "User Name",
             selector: row => renderUser(row),
+            style: {
+                maxWidth: "30%",
+                width: "40%"
+            }
         },
         {
             name: "Rating",
             selector: row => renderRating(row),
+            style: {
+                maxWidth: "30%",
+                width: "40%"
+            }
         },
         {
             name: "Content",
-            selector: row => renderContent(row)
+            selector: row => renderContent(row),
+            style: {
+                maxWidth: "30%",
+                width: "40%"
+            }
         },
         {
             name: "Tags",
-            selector: row => renderTags(row)
+            selector: row => renderTags(row),
+            style: {
+                maxWidth: "30%",
+                width: "40%"
+            }
         }
     ];
 
