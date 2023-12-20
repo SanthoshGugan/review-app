@@ -73,5 +73,10 @@ export const router = createBrowserRouter([
     {
         path: '/:customer_sid/verify-passcode',
         element: <VerifyEmail />
+     },
+    {
+        path: '/test-widget',
+        element: <review-carousel customer_widget_sid="CW00004"/>
+        // element: <add-review customer_widget_sid = "CW00005" />
     }
 ]);

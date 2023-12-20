@@ -156,6 +156,7 @@ const CustomerOnboard = (props) => {
                     />
                 </VStack>
             </form>
+            {/* <review-carousel /> */}
         </CenterCard>
     );
 };

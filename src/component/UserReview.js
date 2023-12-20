@@ -5,6 +5,7 @@ import StarRating from "./ReviewField/StarRating";
 import { Box, Button, Card, Center, Flex, Text } from "@chakra-ui/react";
 import ReviewField from "./ReviewField/ReviewField";
 import CenterCard from "../lib/CenterCard";
+import UploadReviewPicture from "./UploadReviewPicture";
 
 const UserReview = (props) => {
 
@@ -23,8 +24,19 @@ const UserReview = (props) => {
         watch,
         isSubmitting,
         isReviewSubmitted,
-        isReviewSubmissionDisabled
+        isReviewSubmissionDisabled,
+        onUploadSuccess,
+        uploadReviewUrlConstructor,
+        uploadReviewHeaders,
+        onUploadError
     } = useSubmitUserReview({ review_sid });
+
+    const uploadProps = {
+        onUploadError,
+        onUploadSuccess,
+        uploadReviewUrlConstructor,
+        uploadReviewHeaders
+    };
 
     const renderFields = useCallback(() => {
         return <ReviewField
@@ -51,6 +63,10 @@ const UserReview = (props) => {
 
                     <Center flexDirection="column" gap="2rem">
                         {renderFields()}
+                        <UploadReviewPicture
+                            review_sid={review_sid} 
+                            {...uploadProps}
+                        />
                         <Button 
                             type="submit" 
                             style={{

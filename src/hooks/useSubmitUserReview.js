@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchReviewApi, updateReviewApi } from "../api/ReviewApi";
+import { fetchReviewApi, updateReviewApi, uploadReviewImageApi, uploadReviewUrl } from "../api/ReviewApi";
 import { formatRequestForReviewSubmit, getFieldFromReview, updateAnswersInReview, updateFieldInReview } from "../utils/ReviewUtils";
 import { useForm } from "react-hook-form";
 import { review_template_config } from "../utils/reviewTemplateConfig";
@@ -14,6 +14,13 @@ const useSubmitUserReview = ({ review_sid }) => {
 
     const [ isReviewSubmitted, setIsReviewSubmitted ] = useState(false);
     const [ isReviewSubmissionDisabled, setIdReviewSubmissionDisabled ] = useState(false);
+
+    const [ customerSid, setCustomerSid ] = useState(null);
+    const [ userSid, setUserSid ] = useState(null);
+
+    const [file, setFile] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const [reviewImageSid, setReviewImageSid ] = useState(null);
 
     const toast = useToast();
 
@@ -62,9 +69,11 @@ const useSubmitUserReview = ({ review_sid }) => {
             setFetchingReviewInProgress(true);
             const res = await fetchReviewApi({ review_sid });
             const { data: review } = res;
-            const { review_complete } = review;
+            const { review_complete, customer_sid, user_sid } = review;
             setReview(review);
-
+            setCustomerSid(customer_sid);
+            setUserSid(user_sid);
+            
             if (review_complete) {
                 toast({
                     title: "Review submitted",
@@ -95,7 +104,8 @@ const useSubmitUserReview = ({ review_sid }) => {
         setIsReviewSubmitted(false);
         const { content } = review;
         const req = {
-            content: updateAnswersInReview(values, content)
+            content: updateAnswersInReview(values, content),
+            review_image_sid: reviewImageSid
         };
         await updateReviewApi({
             review_sid,
@@ -112,6 +122,43 @@ const useSubmitUserReview = ({ review_sid }) => {
           })
     }
 
+    const uploadReviewUrlConstructor = () => uploadReviewUrl({ customer_sid: customerSid });
+    
+    const uploadReviewHeaders = () => {
+        return {
+            'Content-Type': 'image/png',
+            'Content-Disposition': 'attachment',
+            'user_sid': userSid
+        }
+    }
+
+    const onUploadSuccess = async (res) => {
+        // setProgress(100);
+        
+        const { review_image_sid } = res ;
+        if (!review_image_sid) {
+            toast({
+                title: "Upload failed!",
+                description: "Please try after sometime or contact support",
+                status: "error",
+                isClosable: true,
+                duration: 5000
+            })
+        } else {
+            toast({
+                title: "thanks for adding picture, please proceed with submit to attach picture",
+                status: "success",
+                isClosable: true,
+                duration: 5000
+            })
+            setReviewImageSid(review_image_sid);
+        }
+    }
+
+    const onUploadError = (err) => {
+
+    };
+
     return {
         handleSubmit,
         register,
@@ -122,7 +169,15 @@ const useSubmitUserReview = ({ review_sid }) => {
         watch,
         isSubmitting,
         isReviewSubmitted,
-        isReviewSubmissionDisabled
+        isReviewSubmissionDisabled,
+        onUploadSuccess,
+        setFile,
+        setProgress,
+        file, 
+        progress,
+        uploadReviewUrlConstructor,
+        uploadReviewHeaders,
+        onUploadError
     };
 };
 
