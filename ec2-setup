@@ -1,0 +1,26 @@
+Initial EC2 setup
+**************************************
+1. Create EC2 instance with http/s, ssh traffic allowed to public
+    later work on how to make it secure
+
+2. install these dependencies
+    1. sudo yum install git
+    2. sudo yum install npm
+    3. sudo yum install docker
+    4. sudo yum install make
+3. run docker on ec2
+    sudo yum update -y  
+    sudo yum install -y docker
+    sudo systemctl enable docker
+    sudo systemctl start docker
+4. generate rsa key and add it to github deploy keys
+    1. ssh-keygen -t rsa -b 4096 -f app_rsa
+    2. eval "$(ssh-agent -s)"
+    3. ssh-add ~/.ssh/app_rsa
+    3. copy app-rsa.pub content to settings -> deploy keys
+5. manually start the app
+    1. git clone git@github.com/SanthoshGugan/review-app.git
+    2. ssh-agent $(ssh-add ~/.ssh/app_rsa;
+    3. git clone git@github.com:SanthoshGugan/review-app.git
+    4. chmod 600 ~/.ssh/app_rsa
+    5. make deploy-dev 
