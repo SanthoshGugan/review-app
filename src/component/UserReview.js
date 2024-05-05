@@ -63,10 +63,10 @@ const UserReview = (props) => {
 
                     <Center flexDirection="column" gap="2rem">
                         {renderFields()}
-                        <UploadReviewPicture
+                        {/* <UploadReviewPicture
                             review_sid={review_sid} 
                             {...uploadProps}
-                        />
+                        /> */}
                         <Button 
                             type="submit" 
                             style={{
