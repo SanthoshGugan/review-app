@@ -9,6 +9,7 @@ import ListReviews from "./component/ListReviews";
 import ListWidgets from "./component/ListWidgets";
 import AddWidgets from "./component/AddWidgets";
 import Root from "./component/Root";
+import CustomerDashboard from "./component/CustomerDashboard";
 
 export const router = createBrowserRouter([
     {
@@ -79,5 +80,9 @@ export const router = createBrowserRouter([
         path: '/test-widget',
         element: <review-carousel customer_widget_sid="CW00004"/>
         // element: <add-review customer_widget_sid = "CW00005" />
+    },
+    {
+        path: '/:customer_sid/dashboard',
+        element: <CustomerDashboard />
     }
 ]);

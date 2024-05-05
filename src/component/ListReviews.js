@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useReviewList from "../hooks/useReviewList";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import DataTable from "react-data-table-component";
@@ -172,7 +172,11 @@ const ListReviews = () => {
         <Box height="100vh">
             <Flex height="100%" width="100%" alignItems="center" justifyContent="flex-start" marginTop="2rem" flexDirection="column">
                 <Flex justifyContent="space-between" flex="0 0 5rem" id="flex" alignItems="center" width="100%" padding="0 5rem">
-                    
+                    <Box>
+                        <Link to={`/${customer_sid}/dashboard`}>
+                            <Text color="blue.300" _hover={{ fontWeight: "bold" }}>Home</Text>
+                        </Link>
+                    </Box>
                 </Flex>
                 <Flex flex="0.75 0.25 50%" width="100%" justifyContent="center">
                     {renderDataTable()}

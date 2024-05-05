@@ -56,8 +56,9 @@ const AddUser = (props) => {
         } catch(err) {
             setIsAddUserComplete(true);
             setIsAddUserSuccess(false);
+            const { message = "Error while adding user! "}  = err?.response?.data || {};
             toast({
-                title: "Error in user creation",
+                title: `${message}`,
                 description: "Please retry or reach out to us",
                 status: "error",
                 isClosable: true,

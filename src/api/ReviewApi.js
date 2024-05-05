@@ -1,14 +1,15 @@
 import axios from "axios";
+import { INTERNAL_ROLE_HEADER } from "../utils/urlUtil";
 
 const BASE_URL = `${process.env.REACT_APP_BACKEND_API}/reviews/api/v1/review`;
 const BASE_URL_REVIEW_IAMGE = `${process.env.REACT_APP_BACKEND_API}/reviews/api/v1/reviewImage`
 
-export const requestReviewApi = async ({ customer_sid, req }) => {
-    return await axios.post(`${BASE_URL}/${customer_sid}/trigger`, { ...req });
+export const requestReviewApi = async ({ customer_sid, req, headers = INTERNAL_ROLE_HEADER }) => {
+    return await axios.post(`${BASE_URL}/${customer_sid}/trigger`, { ...req }, { ...headers });
 }
 
-export const fetchReviewApi = async ({ review_sid }) => {
-    return await axios.get(`${BASE_URL}/${review_sid}`);
+export const fetchReviewApi = async ({ review_sid, headers = INTERNAL_ROLE_HEADER }) => {
+    return await axios.get(`${BASE_URL}/${review_sid}`, { ...headers });
 }
 
 export const updateReviewApi = async ({ review_sid, req }) => {

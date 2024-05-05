@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import useUserList from "../hooks/useUserList";
-import { NavLink, useParams } from "react-router-dom";
-import { Box, Button, Center, Flex, Square, Stack } from "@chakra-ui/react";
+import { Link, NavLink, useParams } from "react-router-dom";
+import { Box, Button, Center, Flex, Square, Stack, Text } from "@chakra-ui/react";
 import { EmailIcon } from "@chakra-ui/icons";
 import { ImUserPlus } from "react-icons/im";
 import useRequestUserReview from "../hooks/useRequestUserReview";
@@ -132,7 +132,11 @@ const ListUsers = (props) => {
         <Box height="100vh" id="dummy">
             <Flex height="100%" width="100%" alignItems="center" justifyContent="flex-start" marginTop="2rem" flexDirection="column">
                 <Flex justifyContent="space-between" flex="0 0 5rem" id="flex" alignItems="center" width="100%" padding="0 5rem">
-                    <Box></Box>
+                    <Box>
+                        <Link to={`/${customer_sid}/dashboard`}>
+                            <Text color="blue.300" _hover={{ fontWeight: "bold" }}>Home</Text>
+                        </Link>
+                    </Box>
                     <Stack direction="row" spacing={2}>
                         <Button leftIcon={<ImUserPlus />} colorScheme="teal" variant="ghost">
                             <NavLink
