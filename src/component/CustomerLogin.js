@@ -1,4 +1,4 @@
-import {  VStack, useToast } from "@chakra-ui/react";
+import {  VStack, useToast, Text, Box } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { CUSTOMER_USERNAME_MAX_LENGTH } from "../utils/constants";
@@ -8,7 +8,7 @@ import CenterCard from "../lib/CenterCard";
 import RInput from "../lib/Input";
 import { getButtonFormProps, getInputFormProps } from "../utils/formUtil";
 import RButton from "../lib/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CUSTOMER_USERS_LIST_URL } from "../utils/urlUtil";
 import { emailRegex } from "../utils/regexUtil";
 
@@ -120,6 +120,13 @@ const CustomerLogin = (props) => {
                         isLoading: isSubmitting || isNavigating,
                     })}
                 />
+                <Box margin="1rem">    
+                    <Link to="/onboard">
+                        <Text color="blue.400" fontWeight="bold"> 
+                            dont have account? Sign up.
+                        </Text>
+                    </Link>
+                </Box>
             </VStack>
             </form>
         </CenterCard>

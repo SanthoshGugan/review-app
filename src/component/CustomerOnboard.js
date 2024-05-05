@@ -1,4 +1,4 @@
-import { Box, VStack, useToast } from "@chakra-ui/react";
+import { Box, VStack, useToast, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { onboardCustomerApi } from "../api/CustomerApi";
@@ -8,7 +8,7 @@ import RInput from "../lib/Input";
 import { getButtonFormProps, getInputFormProps } from "../utils/formUtil";
 import { emailRegex } from "../utils/regexUtil";
 import RButton from "../lib/Button";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { VERIFY_PASSCODE_URL } from "../utils/urlUtil";
 import CenterCard from "../lib/CenterCard";
 
@@ -154,6 +154,13 @@ const CustomerOnboard = (props) => {
                             isLoading: isSignupInProgress
                         })}
                     />
+                    <Box margin="1rem">
+                        <Link to="/login">
+                            <Text color="blue.400" fontWeight="bold"> 
+                                already have account? Sign in.
+                            </Text>
+                        </Link>
+                    </Box>
                 </VStack>
             </form>
             {/* <review-carousel /> */}

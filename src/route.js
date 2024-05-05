@@ -8,11 +8,12 @@ import CustomerLogin from "./component/CustomerLogin";
 import ListReviews from "./component/ListReviews";
 import ListWidgets from "./component/ListWidgets";
 import AddWidgets from "./component/AddWidgets";
+import Root from "./component/Root";
 
 export const router = createBrowserRouter([
     {
         path: '/',
-        element: <>Hello World!</>,
+        element: <Root />,
     },
     {
         path: '/:customer_sid/profile',
