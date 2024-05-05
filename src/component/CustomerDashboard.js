@@ -35,11 +35,11 @@ const CustomerDashboard = () => {
                         <Text>Reviews</Text>
                     </Card>
                 </Link>
-                <Link to={`/${customer_sid}/products`} flex="1/4 0 ">
+                {/* <Link to={`/${customer_sid}/products`} flex="1/4 0 ">
                     <Card  fontWeight="bold" padding="3rem" color="goldenrod" _hover={{ bg: "yellow.200", color: 'golden'}}>
                         <Text>Products</Text>
                     </Card>
-                </Link>
+                </Link> */}
             </Flex>
         </Box>
     );
