@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import useReviewList from "../hooks/useReviewList";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import DataTable from "react-data-table-component";
 import { getFieldFromReviewByFieldId } from "../utils/ReviewUtils";
 import StarRating from "./ReviewField/StarRating";
 import Tags from "./Tags";
 import AddTag from "./AddTag";
+import ImportReview from "./ImportReview";
 
 
 const customStyles = {
@@ -42,6 +43,8 @@ const ListReviews = () => {
     const {
         customer_sid
     } = useParams();
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const {
         fetchReviewList,
@@ -177,11 +180,19 @@ const ListReviews = () => {
                             <Text color="blue.300" _hover={{ fontWeight: "bold" }}>Home</Text>
                         </Link>
                     </Box>
+                    <Box>
+                        <Button variant="solid" onClick={onOpen}>Import</Button>
+                        
+                    </Box>
                 </Flex>
                 <Flex flex="0.75 0.25 50%" width="100%" justifyContent="center">
                     {renderDataTable()}
                 </Flex>
             </Flex>
+            <ImportReview
+                isOpen={isOpen}
+                onClose={onClose}
+            />
         </Box>
     );
 };

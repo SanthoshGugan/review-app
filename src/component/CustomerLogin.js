@@ -9,7 +9,7 @@ import RInput from "../lib/Input";
 import { getButtonFormProps, getInputFormProps } from "../utils/formUtil";
 import RButton from "../lib/Button";
 import { Link, useNavigate } from "react-router-dom";
-import { CUSTOMER_USERS_LIST_URL } from "../utils/urlUtil";
+import { CUSTOMER_DASHBOARD, CUSTOMER_USERS_LIST_URL } from "../utils/urlUtil";
 import { emailRegex } from "../utils/regexUtil";
 
 const CustomerLogin = (props) => {
@@ -65,7 +65,7 @@ const CustomerLogin = (props) => {
                   setIsNavigating(true);
                   setTimeout(() => {
                     setIsNavigating(false);
-                    navigate(CUSTOMER_USERS_LIST_URL({ customer_sid }))
+                    navigate(CUSTOMER_DASHBOARD({ customer_sid }))
                   }, 2000)
             }
 

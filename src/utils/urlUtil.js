@@ -16,6 +16,9 @@ export const ADD_WIDGET_URL = ({ customer_sid }) =>
 export const WIDGETS_URL = ({ customer_sid }) => 
     `/${customer_sid}/widgets`;
 
+export const CUSTOMER_DASHBOARD = ({ customer_sid }) => 
+    `/${customer_sid}/dashboard`
+
 export const INTERNAL_ROLE_HEADER = {
     headers: {
         "role": "internal"
