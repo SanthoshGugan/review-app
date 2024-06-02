@@ -83,53 +83,55 @@ const CustomerLogin = (props) => {
     };
 
     return (
-        <CenterCard scheme="blue" title="Login to Account">
-            <form onSubmit={handleSubmit(onSubmit)}>
-            <VStack>
-        
-                <RInput
-                    formProps = {getInputFormProps({
-                            id: "username",
-                            placeholder: "email",
-                            isRequired: true,
-                            patternReg: emailRegex
-                        })
-                    }
-                    {
-                        ...form_props
-                    }
-                />
+        <Box m="15rem">
+            <CenterCard scheme="blue" title="Login to Account" >
+                <form onSubmit={handleSubmit(onSubmit)}>
+                <VStack>
+            
+                    <RInput
+                        formProps = {getInputFormProps({
+                                id: "username",
+                                placeholder: "email",
+                                isRequired: true,
+                                patternReg: emailRegex
+                            })
+                        }
+                        {
+                            ...form_props
+                        }
+                    />
 
-                <RInput
-                    formProps = {getInputFormProps({
-                            id: "password",
-                            placeholder: "password",
-                            isRequired: true,
-                            minLength: 4,
-                        })
-                    }
-                    {
-                        ...form_props
-                    }
-                    type="password"
-                />
-                <RButton
-                    text="Login"
-                    buttonProps={getButtonFormProps({
-                        isDisabled: !isValid,
-                        isLoading: isSubmitting || isNavigating,
-                    })}
-                />
-                <Box margin="1rem">    
-                    <Link to="/onboard">
-                        <Text color="blue.400" fontWeight="bold"> 
-                            dont have account? Sign up.
-                        </Text>
-                    </Link>
-                </Box>
-            </VStack>
-            </form>
-        </CenterCard>
+                    <RInput
+                        formProps = {getInputFormProps({
+                                id: "password",
+                                placeholder: "password",
+                                isRequired: true,
+                                minLength: 4,
+                            })
+                        }
+                        {
+                            ...form_props
+                        }
+                        type="password"
+                    />
+                    <RButton
+                        text="Login"
+                        buttonProps={getButtonFormProps({
+                            isDisabled: !isValid,
+                            isLoading: isSubmitting || isNavigating,
+                        })}
+                    />
+                    <Box margin="1rem">    
+                        <Link to="/signup">
+                            <Text color="blue.400" fontWeight="bold"> 
+                                dont have account? Sign up.
+                            </Text>
+                        </Link>
+                    </Box>
+                </VStack>
+                </form>
+            </CenterCard>
+        </Box>
     );
 };
 

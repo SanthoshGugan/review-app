@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import CustomerOnboard from "./component/CustomerOnboard";
+import CustomerSignup from "./component/CustomerSignup";
 import AddUser from "./component/AddUser";
 import ListUsers from "./component/ListUsers";
 import UserReview from "./component/UserReview";
@@ -10,11 +10,12 @@ import ListWidgets from "./component/ListWidgets";
 import AddWidgets from "./component/AddWidgets";
 import Root from "./component/Root";
 import CustomerDashboard from "./component/CustomerDashboard";
-import Onboard from "./component/Onboard/Onboard";
+import NotLoggedIn from "./component/NotLoggedIn/NotLoggedIn";
+import CustomerOnboard from "./component/CustomerOnboard/CustomerOnboard";
 
 export const router = createBrowserRouter([
     {
-        path: '/',
+        path: '/:customer_sid',
         element: <Root />,
         children: [
             {
@@ -50,10 +51,6 @@ export const router = createBrowserRouter([
                 element: <>User Provides Review by customer_sid and User_sid</>
             },
             {
-                path: '/reviews/:review_sid',
-                element: <UserReview />
-            },
-            {
                 path: '/:customer_sid/reviews/:user_sid/',
                 element: <>View User reviews</>
             },
@@ -66,31 +63,41 @@ export const router = createBrowserRouter([
                 element: <>Edit Review Template</>
             },
             {
-                path: '/login',
-                element: <CustomerLogin />
-            },
-            {
-                path: '/onboard',
-                element: <CustomerOnboard />
-            },
-            {
                 path: '/:customer_sid/verify-passcode',
                 element: <VerifyEmail />
              },
-            {
-                path: '/test-widget',
-                element: <review-carousel customer_widget_sid="CW00004"/>
-                // element: <add-review customer_widget_sid = "CW00005" />
-            },
             {
                 path: '/:customer_sid/dashboard',
                 element: <CustomerDashboard />
             },
             {
                 path:`/:customer_sid/onboard`,
-                element: <Onboard />
-            }
+                element: <CustomerOnboard />
+            },
         ]
     },
+    {
+        path: '/',
+        element: <NotLoggedIn />,
+        children: [
+            {
+                path: '/login',
+                element: <CustomerLogin />
+            },
+            {
+                path: '/signup',
+                element: <CustomerSignup />
+            },
+            {
+                path: '/test-widget',
+                element: <review-carousel customer_widget_sid="CW00004"/>
+                // element: <add-review customer_widget_sid = "CW00005" />
+            },
+            {
+                path: '/reviews/:review_sid',
+                element: <UserReview />
+            },
+        ]
+    }
     
 ]);

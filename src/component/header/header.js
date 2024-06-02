@@ -49,17 +49,17 @@ const Header = ({
                 </Tooltip> */}
               
               {renderLink(
-                `${customer_sid}/onboard`,
+                `/${customer_sid}/onboard`,
                 "Onboard",
                 <HiOutlineRocketLaunch />
               )}
               {renderLink(
-                `${customer_sid}/reviews`,
+                `/${customer_sid}/reviews`,
                 "Reviews",
                 <FaFaceGrinStars />
               )}
               {renderLink(
-                `${customer_sid}/users`,
+                `/${customer_sid}/users`,
                 "Users",
                 <FiUsers />
               )}

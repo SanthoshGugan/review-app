@@ -9,10 +9,10 @@ import { getButtonFormProps, getInputFormProps } from "../utils/formUtil";
 import { emailRegex } from "../utils/regexUtil";
 import RButton from "../lib/Button";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { VERIFY_PASSCODE_URL } from "../utils/urlUtil";
+import { CUSTOMER_ONBOARD_URL, VERIFY_PASSCODE_URL } from "../utils/urlUtil";
 import CenterCard from "../lib/CenterCard";
 
-const CustomerOnboard = (props) => {
+const CustomerSignup = (props) => {
 
     const [ customerSid, setCustomerSid ] = useState(null);
     const [ signUpComplete, setSignUpComplete ] = useState(false);
@@ -50,20 +50,25 @@ const CustomerOnboard = (props) => {
 
             toast({
                 title: "Account Created",
-                description: "Please click on the link sent over mail for verification!",
+                description: "Mail sent over for verification!",
                 status: "success",
                 duration: 5000,
                 isClosable: true,
               })
             setSignUpComplete(true);
             setIsSignupInProgress(false);
+
+            setTimeout(() => {
+                navigate(CUSTOMER_ONBOARD_URL({ customer_sid }));
+            }, 2000)
     
         } catch (err) {
             setIsSignupInProgress(false);
-
+            const { message } = err?.response?.data;
+            console.log(`err : ${err}`);
             toast({
                 title: "Account creation failed",
-                description: "Please retry or reach out to us!",
+                description: message,
                 status: "error",
                 duration: 5000,
                 isClosable: true,
@@ -168,4 +173,4 @@ const CustomerOnboard = (props) => {
     );
 };
 
-export default CustomerOnboard;
+export default CustomerSignup;
