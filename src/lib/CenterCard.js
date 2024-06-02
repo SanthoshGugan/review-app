@@ -4,7 +4,7 @@ import React from "react";
 const CenterCard = (props) => {
     const { children, maxW = 'md', scheme="blue", title = "" } = props;
     return (
-        <Box height="100vh" className={"background-review-icon"}>
+        // <Box height="100%" className={"background-review-icon"}>
             <Flex alignItems="center" justifyContent="center" height={"100%"} >
                 <Card
                     style={{
@@ -26,7 +26,7 @@ const CenterCard = (props) => {
                     </CardBody>
                 </Card>
             </Flex>
-        </Box>
+        // </Box>
     );
 };
 

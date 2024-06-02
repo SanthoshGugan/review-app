@@ -1,13 +1,17 @@
+import { Box } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { redirect, useNavigate } from "react-router-dom";
+import { Outlet, redirect, useNavigate } from "react-router-dom";
+import Header from "./header/header";
 const Root = () => {
     const navigate = useNavigate();
     useEffect(() => {
-        console.log(`redirecting.....`)
-        navigate('/login');
     });
     return (
-        <>Unauthorized</>
+        <Box>
+            <Header customer_sid="CS00039"/>
+            <Box height="6rem" bgColor="transparent" />
+            <Box><Outlet /></Box>
+        </Box>
     );
 }
 
