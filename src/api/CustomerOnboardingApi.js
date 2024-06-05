@@ -25,3 +25,11 @@ export const resendVerificationEmailApi = async ({ customer_sid }) => {
         }
     })
 }
+
+
+
+export const markCustomerWidgetEmbedCompleteApi = async ({customer_sid}) => {
+    return await axios.post(`${BASE_URL}/markwidgetembedcomplete`, {}, {
+        headers: {customer_sid}
+    })
+};
