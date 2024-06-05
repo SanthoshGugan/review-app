@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getCustomerDetailsApi, getCustomerOnboardingApi, resendVerificationEmailApi } from "../api/CustomerOnboardingApi";
+import { getCustomerDetailsApi, getCustomerOnboardingApi, markCustomerWidgetEmbedCompleteApi, resendVerificationEmailApi } from "../api/CustomerOnboardingApi";
 
 const EMAIL_VERIFICATION_STEP = {
     step_no: 1,
@@ -69,6 +69,16 @@ const useCustomerOnboard = ({ customer_sid }) => {
 
     };
 
+    // Widget Embed Step
+    const markEmbedidgetStepComplete = async () => {
+        try {
+            await markCustomerWidgetEmbedCompleteApi({ customer_sid });
+            await fetchCustomerOnboarding();
+        } catch(err) {
+            
+        }
+    }
+
     useEffect(() => {
         if (customer_sid) {
             fetchCustomerOnboarding();
@@ -83,7 +93,8 @@ const useCustomerOnboard = ({ customer_sid }) => {
         resendVerificationEmail,
         resentEmailInProgress,
         customerDetail,
-        getEmailVerification
+        getEmailVerification,
+        markEmbedidgetStepComplete
     };
 };
 
