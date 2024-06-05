@@ -238,10 +238,10 @@ const CustomerOnboard = () => {
         <Box m="1rem">
             <Accordion allowToggle allowMultiple>
                 {renderEmailVerification({ step: steps[0] || {}})}
-                {renderWidgetEmbed({ step: steps[1] || []})}  
-                {renderReviewImports()}  
-                {renderWidgetConfigs()}  
-                {renderEmailConfigs()}  
+                {renderWidgetEmbed({ step: steps[1] || []})}    
+                {renderReviewImports()}
+                {renderEmailConfigs()}
+                {renderWidgetConfigs()}
                 {onboarding_completed && renderOnboardingCompleted()}
             </Accordion>
         </Box>
