@@ -23,6 +23,7 @@ const CustomerOnboard = () => {
         customerDetail,
         getEmailVerification,
         markEmbedidgetStepComplete,
+        onboarding_completed = true
 
      } = useCustomerOnboard({customer_sid});
 
@@ -224,15 +225,24 @@ const CustomerOnboard = () => {
         );
     };
 
+    const renderOnboardingCompleted = () => {
+        return (
+            <Flex alignItems="center" justifyContent="center" bgColor="yellow.200" my="5rem" p="2rem">
+                <Text>Congrats, All onboarding items are competed.</Text>
+            </Flex>
+        );
+    };
+
 
     return (
         <Box m="1rem">
             <Accordion allowToggle allowMultiple>
                 {renderEmailVerification({ step: steps[0] || {}})}
-                {renderWidgetEmbed({ step: steps[1] || []})}  
-                {renderReviewImports()}  
-                {renderWidgetConfigs()}  
-                {renderEmailConfigs()}  
+                {renderWidgetEmbed({ step: steps[1] || []})}    
+                {renderReviewImports()}
+                {renderEmailConfigs()}
+                {renderWidgetConfigs()}
+                {onboarding_completed && renderOnboardingCompleted()}
             </Accordion>
         </Box>
     );
