@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { checkoutCustomerPaymentApi, createOrderCustomerPaymentApi } from "../api/customerPaymentApi";
+import { checkoutCustomerPaymentApi, createOrderCustomerPaymentApi, updateOrderCustomerPaymentApi } from "../api/customerPaymentApi";
 
 const useCustomerCheckout = ({ customer_sid, onSuccess, onFailure }) => {
 
@@ -11,10 +11,12 @@ const useCustomerCheckout = ({ customer_sid, onSuccess, onFailure }) => {
     const createOrder = async ({ amount }) => {
         try {
             const req = {
-                amount
+                amount,
+                pricing_plan_sid: "PP00001"
             }
             const res = await createOrderCustomerPaymentApi({ req, customer_sid });
-            const { order_id } = res?.data;
+            const {customer_order} = res?.data;
+            const {external_order_id: order_id} = customer_order;
             setOrderId(order_id);
             setAmount(amount);
         } catch(err) {
@@ -22,10 +24,29 @@ const useCustomerCheckout = ({ customer_sid, onSuccess, onFailure }) => {
         }
     }
 
-    const successHandler = (res) => {
+    const successHandler = async (res) => {
         console.log(res);
         setIsSucess(true);
         setIsFailure(false);
+        const {
+            razorpay_order_id,
+            razorpay_payment_id: payment_id,
+            razorpay_signature: signature
+        } = res;
+
+        const req = {
+            status: `completed`,
+            gateway_props: {
+                payment_id,
+                signature
+            }
+        };
+        await updateOrderCustomerPaymentApi({
+            req,
+            customer_sid,
+            order_id: orderId
+        });
+    
         onSuccess();
 
     };

@@ -9,3 +9,13 @@ export const createOrderCustomerPaymentApi = async ({ req, customer_sid  }) => {
         }
     });
 };
+
+export const updateOrderCustomerPaymentApi = async ({ req, customer_sid, order_id }) => {
+    return axios.put(`${BASE_URL}/order/${order_id}`, {
+        ...req
+    },{
+        headers: {
+            customer_sid
+        }
+    })
+}
