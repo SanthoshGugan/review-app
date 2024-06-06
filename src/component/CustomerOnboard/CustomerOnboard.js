@@ -21,7 +21,9 @@ const CustomerOnboard = () => {
         resendVerificationEmail,
         resentEmailInProgress,
         customerDetail,
-        getEmailVerification
+        getEmailVerification,
+        markEmbedidgetStepComplete,
+        onboarding_completed = true
 
      } = useCustomerOnboard({customer_sid});
 
@@ -105,7 +107,10 @@ const CustomerOnboard = () => {
                 <AccordionButton bgColor={isComplete ? "green.100" : "orange.100" } fontWeight="semibold" _hover={{ bgColor: "orange.200", fontWeight: "bold"}}>
                     <Flex alignItems="center" justifyContent="space-between" w="100%">
                         <Text>Widget Embed</Text>
-                            {renderTick({ isComplete })}
+                            {isComplete && renderTick({ isComplete })}
+                            {!isComplete && (
+                                <Button onClick={markEmbedidgetStepComplete}>Mark Complete</Button>
+                            )}
                     </Flex>
                 </AccordionButton>
                 <AccordionPanel bgColor={isComplete ? "green.50" : "orange.50" } >
@@ -132,12 +137,112 @@ const CustomerOnboard = () => {
         );
     }
 
+    const renderReviewImports = () => {
+
+        const isComplete = false;
+
+        return (
+            <AccordionItem my="1rem"  >
+                <AccordionButton bgColor={isComplete ? "green.100": "orange.100"}  fontWeight="semibold" _hover={{ bgColor: "green.200", fontWeight: "bold"}}>
+                    <Flex alignItems="center" justifyContent="space-between" w="100%">
+                        <Text>Reviews Import</Text>
+                            {renderTick({  isComplete })}
+                    </Flex>
+                </AccordionButton>
+                <AccordionPanel bgColor="green.50">
+                    <Box>
+                        <Flex direction="column" justifyContent="center" p="1rem">
+                            {!isComplete && (
+                                <Flex justifyContent="center">
+                                    <Text fontWeight="bold">
+                                        Add Reviews from other platforms
+                                    </Text>
+                                </Flex>
+                            )}
+                        </Flex>
+                    </Box>
+                </AccordionPanel>
+            </AccordionItem>
+        );
+    };
+
+
+    const renderWidgetConfigs = () => {
+
+        const isComplete = false;
+
+        return (
+            <AccordionItem my="1rem"  >
+                <AccordionButton bgColor={isComplete ? "green.100": "orange.100"}  fontWeight="semibold" _hover={{ bgColor: "green.200", fontWeight: "bold"}}>
+                    <Flex alignItems="center" justifyContent="space-between" w="100%">
+                        <Text>Widget Configs</Text>
+                            {renderTick({  isComplete })}
+                    </Flex>
+                </AccordionButton>
+                <AccordionPanel bgColor="green.50">
+                    <Box>
+                        <Flex direction="column" justifyContent="center" p="1rem">
+                            {!isComplete && (
+                                <Flex justifyContent="center">
+                                    <Text fontWeight="bold">
+                                        Customize widgets
+                                    </Text>
+                                </Flex>
+                            )}
+                        </Flex>
+                    </Box>
+                </AccordionPanel>
+            </AccordionItem>
+        );
+    };
+
+    const renderEmailConfigs = () => {
+
+        const isComplete = false;
+
+        return (
+            <AccordionItem my="1rem"  >
+                <AccordionButton bgColor={isComplete ? "green.100": "orange.100"}  fontWeight="semibold" _hover={{ bgColor: "green.200", fontWeight: "bold"}}>
+                    <Flex alignItems="center" justifyContent="space-between" w="100%">
+                        <Text>Email Configs</Text>
+                            {renderTick({  isComplete })}
+                    </Flex>
+                </AccordionButton>
+                <AccordionPanel bgColor="green.50">
+                    <Box>
+                        <Flex direction="column" justifyContent="center" p="1rem">
+                            {!isComplete && (
+                                <Flex justifyContent="center">
+                                    <Text fontWeight="bold">
+                                        Customize emails
+                                    </Text>
+                                </Flex>
+                            )}
+                        </Flex>
+                    </Box>
+                </AccordionPanel>
+            </AccordionItem>
+        );
+    };
+
+    const renderOnboardingCompleted = () => {
+        return (
+            <Flex alignItems="center" justifyContent="center" bgColor="yellow.200" my="5rem" p="2rem">
+                <Text>Congrats, All onboarding items are competed.</Text>
+            </Flex>
+        );
+    };
+
 
     return (
         <Box m="1rem">
             <Accordion allowToggle allowMultiple>
                 {renderEmailVerification({ step: steps[0] || {}})}
                 {renderWidgetEmbed({ step: steps[1] || []})}    
+                {renderReviewImports()}
+                {renderEmailConfigs()}
+                {renderWidgetConfigs()}
+                {onboarding_completed && renderOnboardingCompleted()}
             </Accordion>
         </Box>
     );
