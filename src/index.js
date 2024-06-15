@@ -6,11 +6,12 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './route';
 import { Box, ChakraProvider } from '@chakra-ui/react';
 import Header from './component/header/header';
+import theme from './theme/theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <RouterProvider router={router} />
     </ChakraProvider>
   </React.StrictMode>
