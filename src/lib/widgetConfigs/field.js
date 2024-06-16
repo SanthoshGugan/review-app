@@ -1,4 +1,4 @@
-import { Box, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, Switch, Text } from "@chakra-ui/react";
+import { Box, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, Switch, Text } from "@chakra-ui/react";
 import { MultiSelect } from "chakra-multiselect";
 import React from "react";
 
@@ -31,8 +31,8 @@ const Field = ({
 
     const handleChange = (e) => {
         console.log("event" , e);
-        const { target } = e;
-        onChange(target);
+        const { target: { value } } = e;
+        onChange(value);
     }
 
 
@@ -54,7 +54,7 @@ const Field = ({
             <Input
                 type={inputType}
                 value={value}
-                // onChange={handleChange}
+                onChange={handleChange}
                 placeholder={placeholder}
             />
         );
@@ -64,6 +64,7 @@ const Field = ({
         return (
             <Switch
                 isChecked={isChecked}
+                onChange={value => onChange(value)}
             />
         );
     };
@@ -71,6 +72,7 @@ const Field = ({
     const renderField = () => {
         switch(type) {
             case "input":
+            case "text":
                 return renderInput();
             case "switch":
                 return renderSwitch();
@@ -104,6 +106,18 @@ const Field = ({
         if (isError || !helpText) return <></>;
         return (
             <FormHelperText>Help</FormHelperText>
+        );
+    }
+    if (type === "switch") {
+        return (
+            <Box>
+                <FormControl isInvalid={isError}>
+                    <Flex>
+                        {renderLabel()}
+                        {renderField()}
+                    </Flex>
+                </FormControl>
+            </Box>
         );
     }
 

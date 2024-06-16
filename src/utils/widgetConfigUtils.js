@@ -19,4 +19,26 @@ export const getInitialStarConfig = ({ config, configBuilder }) => {
         const { value } = option;
         return stars_str.includes(value);
     });
+};
+
+export const getInitialLimitConfig = ({ config, configBuilder }) => {
+    const { limit } = config;
+
+    if (!limit) return "";
+
+    const limit_group = getConfigByName({ configs: configBuilder, group : "limit" });
+    const { fields } = limit_group;
+    const [limit_field] = fields;
+    const { options = [] } = limit_field;
+
+    const option = options.filter(option => {
+        const { value } = option;
+        return value === limit.toString();
+    })[0];
+
+    if (!option) {
+        return options[0];
+    }
+    return option;
+
 }
