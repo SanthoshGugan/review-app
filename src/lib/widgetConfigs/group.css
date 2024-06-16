@@ -1,0 +1,13 @@
+#group__container{
+    position: relative;
+}
+
+#group__title{
+    position: absolute;
+    top: -12px;
+    left: 25px;
+    background-color: white;
+    opacity: 1;
+    padding-left: 20px;
+    padding-right: 20px;
+}

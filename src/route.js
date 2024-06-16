@@ -12,6 +12,8 @@ import Root from "./component/Root";
 import CustomerDashboard from "./component/CustomerDashboard";
 import NotLoggedIn from "./component/NotLoggedIn/NotLoggedIn";
 import CustomerOnboard from "./component/CustomerOnboard/CustomerOnboard";
+// import CustomerPayment from "./component/CustomerPayment/CustomerPayment";
+import CustomerWidgetConfig from "./component/CustomerWidgetConfig/CustomerWidgetConfig";
 
 export const router = createBrowserRouter([
     {
@@ -74,6 +76,14 @@ export const router = createBrowserRouter([
                 path:`/:customer_sid/onboard`,
                 element: <CustomerOnboard />
             },
+            // {
+            //     path: `/:customer_sid/payment`,
+            //     element: <CustomerPayment />
+            // },
+            {
+                path: '/:customer_sid/widgets/config',
+                element: <CustomerWidgetConfig />
+            }
         ]
     },
     {
