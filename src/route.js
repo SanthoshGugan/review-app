@@ -14,6 +14,7 @@ import NotLoggedIn from "./component/NotLoggedIn/NotLoggedIn";
 import CustomerOnboard from "./component/CustomerOnboard/CustomerOnboard";
 import CustomerPayment from "./component/CustomerPayment/CustomerPayment";
 import ImportCompanyReview from "./component/ImportCompanyReview/ImportCompanyReview";
+import ImportProductReview from "./component/ImportProductReview/ImportProductReview";
 
 export const router = createBrowserRouter([
     {
@@ -43,6 +44,11 @@ export const router = createBrowserRouter([
             {
                 path: '/:customer_sid/reviews/import',
                 element: <ImportCompanyReview />
+            },
+
+            {
+                path: '/:customer_sid/productreviews/import',
+                element: <ImportProductReview />
             },
             {
                 path: '/:customer_sid/widgets',
