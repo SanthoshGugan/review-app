@@ -1,11 +1,11 @@
 import React from "react";
-import { Box, Button, Container, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react";
+import { Box, Button, Container, Input, InputGroup, InputRightElement, Text, Textarea } from "@chakra-ui/react";
 import { ErrorMessage } from "@hookform/error-message";
 
 const RInput = (props) => {
 
-    const { register, errors, formProps, getFieldState, type= "text" } = props;
-    const { registerProps : { regId, validations }, id } = formProps;
+    const { register, errors, formProps, getFieldState } = props;
+    const { registerProps : { regId, validations }, id, type= "text" } = formProps;
     const { invalid } = getFieldState(id);
 
 
@@ -19,7 +19,7 @@ const RInput = (props) => {
     }
 
     const renderField = () => {
-        if (id == "password") {
+        if (id === "password") {
             return (
                 <>
                     <Input
@@ -46,6 +46,22 @@ const RInput = (props) => {
                     </InputRightElement>
                 </>
             )
+        }
+
+        if (type === "textBox") {
+            return (
+                <Textarea
+                    variant="flushed"
+                    {
+                        ...register(regId, {
+                            ...validations
+                        })
+                    }
+                    {
+                        ...formProps
+                    }
+                />
+            );
         }
         return (
             <Input

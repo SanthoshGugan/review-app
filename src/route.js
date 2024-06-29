@@ -15,6 +15,7 @@ import CustomerOnboard from "./component/CustomerOnboard/CustomerOnboard";
 import CustomerPayment from "./component/CustomerPayment/CustomerPayment";
 import ImportCompanyReview from "./component/ImportCompanyReview/ImportCompanyReview";
 import ImportProductReview from "./component/ImportProductReview/ImportProductReview";
+import EmailConfig from "./component/EmailConfig/EmailConfig";
 
 export const router = createBrowserRouter([
     {
@@ -89,6 +90,10 @@ export const router = createBrowserRouter([
             {
                 path: `/:customer_sid/payment`,
                 element: <CustomerPayment />
+            },
+            {
+                path: `/:customer_sid/emailconfig`,
+                element: <EmailConfig />
             }
         ]
     },

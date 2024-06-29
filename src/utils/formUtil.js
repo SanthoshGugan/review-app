@@ -1,7 +1,8 @@
-export const getInputFormProps = ({ id, placeholder , isRequired, minLength, maxLength, patternReg }) => {
+export const getInputFormProps = ({ id, placeholder , isRequired, minLength, maxLength, patternReg, type }) => {
     const formProps = {
         id, 
-        placeholder
+        placeholder,
+        type
     };
 
     const registerProps = {

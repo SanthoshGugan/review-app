@@ -2,13 +2,12 @@ import { Button } from "@chakra-ui/react";
 import React from "react";
 
 
-const FileUpload = ({ onUpload, id, btnText = "upload" }) => {
+const FileUpload = ({ onUpload, id, btnText = "upload", accept=".csv" }) => {
 
     const input_id = `__rf__file_picker__${id}`;
 
     const onFileChange = async (event) => {
         const file = event.target.files[0];
-        console.log("file to uplaod :::: ", file);
         await onUpload({ file });
     };
 
@@ -23,7 +22,7 @@ const FileUpload = ({ onUpload, id, btnText = "upload" }) => {
                 {btnText}
             </Button>
             <input 
-                accept=".csv" 
+                accept={accept}
                 type="file"
                 onChange={onFileChange}
                 id={input_id}
